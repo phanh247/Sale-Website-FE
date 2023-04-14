@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- css -->
+<!--     <link rel="stylesheet" href="/LAYOUT/CSS/home-page.css"> -->
+<link rel="stylesheet" type="text/css" th:href="@{/css/home-page.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/css/navbar.css}">
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+	integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<!-- js -->
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+	crossorigin="anonymous"></script>
+
+<title>Trang chủ</title>
+</head>
+
+<body>
+	<form th:action="@{/search}" method="get">
+		<div>
+			<div class="top-bar">
+				<div class="container-fluid">
+					<div class="d-flex justify-content-between">
+						<div>
+							<ul class="topbar-left p-2">
+								<li><span><i class="fa-solid fa-phone-volume"></i>Hotline:
+										19009191</span></li>
+							</ul>
+						</div>
+						<div>
+							<ul class="topbar-right d-flex justify-content-end">
+								<li class="p-2" th:unless="${session.username} == null"><a
+									th:href="@{/check-order}"><span>Tra cứu đơn hàng</span></a></li>
+								<li class="p-2" th:if="${session.username} == null"><a
+									th:href="@{/login}"><span>Tra cứu đơn hàng</span></a></li>
+								<li class="p-2 " th:if="${session.username} == null"><a
+									th:href="@{/login}"><i class="fa-solid fa-user"></i><span>Đăng
+											nhập</span></a></li>
+								<li class="p-2 admin-menu"
+									th:unless="${session.username} == null"><a><i
+										class="fa-solid fa-user"></i><span
+										th:text="${session.username}"></span></a></li>
+								<li class="p-2"><a th:href="@{/cart}"><i
+										class="fa-solid fa-cart-shopping"></i><span>Giỏ hàng</span></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top"
+				data-bs-theme="dark">
+				<div class="container-fluid">
+					<a class="navbar-brand" th:href="@{/}">Logo</a>
+					<button class="navbar-toggler" type="button"
+						data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+						aria-controls="navbarSupportedContent" aria-expanded="false"
+						aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarSupportedContent">
+						<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+							<li class="nav-item dropdown"><a class="nav-link" href="#"
+								data-bs-toggle="dropdown" aria-expanded="false">SẢN PHẨM MỚI</a>
+								<div class="dropdown-menu">
+									<a class="dropdown-item" href="#">Action</a> <a
+										class="dropdown-item" href="#">Action</a> <a
+										class="dropdown-item" href="#">Action</a>
+								</div></li>
+							<li class="nav-item dropdown"
+								th:each="category : ${listCategories}"><a class="nav-link"
+								th:href="@{/category/{id}(id=${category.categoryId})}"
+								data-bs-toggle="dropdown" aria-expanded="false"
+								th:text="${category.categoryName}"></a>
+								<div class="dropdown-menu">
+									<a class="dropdown-item"
+										th:href="@{/category/{id}?type=Nam(id=${category.categoryId})}">Nam</a>
+									<a class="dropdown-item"
+										th:href="@{/category/{id}?type=Nữ(id=${category.categoryId})}">Nữ</a>
+									<a class="dropdown-item"
+										th:href="@{/category/{id}?type=Unisex(id=${category.categoryId})}">Unisex</a>
+								</div></li>
+							<li class="nav-item dropdown"><a class="nav-link" href="#"
+								data-bs-toggle="dropdown" aria-expanded="false">SALE</a></li>
+							<li class="nav-item dropdown"><a class="nav-link" href="#"
+								aria-expanded="false">TIN TỨC</a></li>
+						</ul>
+						<div class="d-flex" role="search">
+							<input class="form-control me-2" type="search"
+								placeholder="Search" aria-label="Search" th:name="searchField">
+							<button class="btn btn-outline-success" type="submit">
+								<i class="fa-solid fa-magnifying-glass"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+			</nav>
+			<main>
+				<div id="oneBanner" class="carousel slide one-banner"
+					data-bs-ride="carousel">
+					<div class="carousel-indicators">
+						<button type="button" data-bs-target="#oneBanner"
+							data-bs-slide-to="0" class="active" aria-current="true"
+							aria-label="Slide 1"></button>
+						<button type="button" data-bs-target="#oneBanner"
+							data-bs-slide-to="1" aria-label="Slide 2"></button>
+						<button type="button" data-bs-target="#oneBanner"
+							data-bs-slide-to="2" aria-label="Slide 3"></button>
+					</div>
+					<div class="carousel-inner">
+						<div class="carousel-item active" data-bs-interval="3000">
+							<img
+								src="https://www.stadiumgoods.com/BWStaticContent/54000/d5979083-2d66-4b44-95c7-f147065761b6_230306-dz1382-001-desktop-02.jpg"
+								alt="slide-banner">
+						</div>
+						<div class="carousel-item" data-bs-interval="3000">
+							<img
+								src="https://cdn.shopify.com/s/files/1/0408/9909/files/Untitled-1_93bde367-8510-418d-b6f2-b6532dd59f6d.jpg?v=1675972770&width=1280"
+								alt="slide-banner">
+						</div>
+						<div class="carousel-item" data-bs-interval="3000">
+							<img
+								src="https://images.dsw.com/is/image/DSWShoes/P230254_ft_sneakers-75?impolicy=qlt-medium&imwidth=1400&imdensity=1"
+								alt="slide-banner">
+						</div>
+					</div>
+					<button class="carousel-control-prev" type="button"
+						data-bs-target="#oneBanner" data-bs-slide="prev">
+						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Previous</span>
+					</button>
+					<button class="carousel-control-next" type="button"
+						data-bs-target="#oneBanner" data-bs-slide="next">
+						<span class="carousel-control-next-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Next</span>
+					</button>
+				</div>
+
+				<div class="article-product">
+					<section id="brandContent" class="brands carousel slide">
+						<h5>THƯƠNG HIỆU</h5>
+						<div class="carousel-inner">
+							<div class="carousel-item active">
+								<div class="d-flex justify-content-between">
+									<a th:href="@{/category/{id}(id=3)}"><img
+										src="https://trivela.vn/wp-content/uploads/2023/02/Trang-hang-1024x1024.png"
+										alt="logo brand"></a> <a th:href="@{/category/{id}(id=1)}"><img
+										src="https://trivela.vn/wp-content/uploads/2023/02/Trang-hang-2-1024x1024.png"
+										alt="logo brand"></a> <a th:href="@{/category/{id}(id=4)}"><img
+										src="https://trivela.vn/wp-content/uploads/2023/02/Trang-hang-3-1024x1024.png"
+										alt="logo brand"></a> <a th:href="@{/category/{id}(id=2)}"><img
+										src="https://trivela.vn/wp-content/uploads/2023/02/Trang-hang-16-1024x1024.png"
+										alt="logo brand"></a><a href="#"><img
+										src="https://trivela.vn/wp-content/uploads/2023/02/Trang-hang-9-1024x1024.png"
+										alt="logo brand"></a>
+								</div>
+							</div>
+							<div class="carousel-item">
+								<div class="d-flex justify-content-between">
+									<a href="#"><img
+										src="https://trivela.vn/wp-content/uploads/2023/02/Trang-hang-10-1024x1024.png"
+										alt="logo brand"></a> <a href="#"><img
+										src="https://trivela.vn/wp-content/uploads/2023/02/Trang-hang-4-1024x1024.png"
+										alt="logo brand"></a> <a href="#"><img
+										src="https://trivela.vn/wp-content/uploads/2023/02/Trang-hang-7-1024x1024.png"
+										alt="logo brand"></a> <a href="#"><img
+										src="https://trivela.vn/wp-content/uploads/2023/02/Trang-hang-5-1024x1024.png"
+										alt="logo brand"></a> <a href="#"><img
+										src="https://trivela.vn/wp-content/uploads/2023/02/Trang-hang-13-1024x1024.png"
+										alt="logo brand"></a>
+								</div>
+							</div>
+						</div>
+						<button class="carousel-control-prev" type="button"
+							data-bs-target="#brandContent" data-bs-slide="prev">
+							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+							<span class="visually-hidden">Previous</span>
+						</button>
+						<button class="carousel-control-next" type="button"
+							data-bs-target="#brandContent" data-bs-slide="next">
+							<span class="carousel-control-next-icon" aria-hidden="true"></span>
+							<span class="visually-hidden">Next</span>
+						</button>
+					</section>
+
+					<section class="selling-products">
+						<div class="d-flex justify-content-between">
+							<h4 class="p-2">Sản phẩm bán chạy</h4>
+							<span class="p-2 view-all"><a th:href="@{/product?text=1}">Xem
+									thêm</a></span>
+						</div>
+						<div class="content-products">
+							<div id="sellingProducts" class="carousel slide">
+								<div class="carousel-indicators">
+									<button type="button" data-bs-target="#sellingProducts"
+										data-bs-slide-to="0" class="active" aria-current="true"
+										aria-label="Slide 1"></button>
+									<button type="button" data-bs-target="#sellingProducts"
+										data-bs-slide-to="1" aria-label="Slide 2"></button>
+									<button type="button" data-bs-target="#sellingProducts"
+										data-bs-slide-to="2" aria-label="Slide 3"></button>
+								</div>
+								<div class="carousel-inner">
+									<div class="carousel-item active">
+										<div class="d-flex justify-content-between">
+											<div class="content-products-item"
+												th:each="product : ${listProducts1}">
+												<a th:href="@{/product/{id}(id=${product.productId})}">
+													<img th:src="${product.images[0].link}">
+													<div class="name-brand" th:text="${product.brand}"></div>
+													<h6 class="name-prod" style="height: 30px;"
+														th:text="${product.productName}"></h6>
+												</a>
+												<div class="price-prod"
+													th:text="${#numbers.formatDecimal(product.price,3,'POINT',0,'COMMA')}+đ"></div>
+												<div class="buy-or-cart d-flex justify-content-between">
+													<a href="#">Mua ngay</a> <a href="#">Thêm giỏ hàng</a>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="carousel-item">
+										<div class="d-flex justify-content-between">
+											<div class="content-products-item"
+												th:each="product : ${listProducts2}">
+												<a th:href="@{/product/{id}(id=${product.productId})}">
+													<img th:src="${product.images[0].link}">
+													<div class="name-brand" th:text="${product.brand}"></div>
+													<h6 class="name-prod" style="height: 30px;"
+														th:text="${product.productName}"></h6>
+												</a>
+												<div class="price-prod"
+													th:text="${#numbers.formatDecimal(product.price,3,'POINT',0,'COMMA')}+đ"></div>
+												<div class="buy-or-cart d-flex justify-content-between">
+													<a href="#">Mua ngay</a> <a href="#">Thêm giỏ hàng</a>
+												</div>
+											</div>
+
+										</div>
+									</div>
+									<div class="carousel-item">
+										<div class="d-flex justify-content-between">
+											<div class="content-products-item"
+												th:each="product : ${listProducts3}">
+												<a th:href="@{/product/{id}(id=${product.productId})}">
+													<img th:src="${product.images[0].link}">
+													<div class="name-brand" th:text="${product.brand}"></div>
+													<h6 class="name-prod" style="height: 30px;"
+														th:text="${product.productName}"></h6>
+												</a>
+												<div class="price-prod"
+													th:text="${#numbers.formatDecimal(product.price,3,'POINT',0,'COMMA')}+đ"></div>
+												<div class="buy-or-cart d-flex justify-content-between">
+													<a href="#">Mua ngay</a> <a href="#">Thêm giỏ hàng</a>
+												</div>
+											</div>
+
+										</div>
+									</div>
+								</div>
+								<button class="carousel-control-prev" type="button"
+									data-bs-target="#sellingProducts" data-bs-slide="prev">
+									<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+									<span class="visually-hidden">Previous</span>
+								</button>
+								<button class="carousel-control-next" type="button"
+									data-bs-target="#sellingProducts" data-bs-slide="next">
+									<span class="carousel-control-next-icon" aria-hidden="true"></span>
+									<span class="visually-hidden">Next</span>
+								</button>
+							</div>
+						</div>
+					</section>
+					<section class="two-banner">
+						<div class="d-flex justify-content-evenly">
+							<div class="two-banner-item">
+								<img
+									src="https://img.freepik.com/free-photo/front-view-man-with-sunglasses-talking-smartphone_23-2148682619.jpg?w=360&t=st=1678597280~exp=1678597880~hmac=5919ea73cf1cbd982d0d5eb18724a89803e06a2facbe9570166159dbb81b23e4"
+									alt="">
+								<div>
+									<h3>NAM</h3>
+									<a th:href="@{/gender?type=Nam}">XEM NGAY<i class="fa-solid fa-arrow-right"></i></a>
+								</div>
+							</div>
+							<div class="two-banner-item">
+								<img style="width: 400px"
+									src="https://scontent.fsgn8-2.fna.fbcdn.net/v/t39.30808-6/327749512_5816850688429002_4833706801407813073_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=174925&_nc_ohc=VzELynMfPOMAX9uz30Q&_nc_ht=scontent.fsgn8-2.fna&oh=00_AfAXgegGrrAY2MkNE7tw4YkU8NjWRbbv2O16DgT8yBV_WA&oe=6425E63F"
+									alt="">
+								<div>
+									<h3>NỮ</h3>
+									<a th:href="@{/gender?type=Nữ}">XEM NGAY<i class="fa-solid fa-arrow-right"></i></a>
+								</div>
+							</div>
+							<div class="two-banner-item">
+								<img
+									src="https://img.freepik.com/free-photo/pretty-young-boy-casual-clothes-white-wall-fashionable-posing-caucasian-male-preschooler-with-bright-facial-emotions-childhood-expression-having-fun-drinking-milk-thumb-up_155003-39440.jpg?w=360&t=st=1678597545~exp=1678598145~hmac=31a2cef2505c66071bb778a0bdcedc35a2a40834aa7216542bd23efa9a4d956a"
+									alt="">
+								<div>
+									<h3>TRẺ EM</h3>
+									<a th:href="@{/coming}">XEM NGAY<i class="fa-solid fa-arrow-right"></i></a>
+								</div>
+							</div>
+						</div>
+					</section>
+					<section class="new-arrivals">
+						<div class="d-flex justify-content-between">
+							<h4 class="p-2">Sản phẩm mới</h4>
+							<span class="p-2 view-all"><a
+								th:href="@{/product?text=desc}">Xem thêm</a></span>
+						</div>
+						<div class="content-products">
+							<div id="newArrvials" class="carousel slide">
+								<div class="carousel-indicators">
+									<button type="button" data-bs-target="#newArrvials"
+										data-bs-slide-to="0" class="active" aria-current="true"
+										aria-label="Slide 1"></button>
+									<button type="button" data-bs-target="#newArrvials"
+										data-bs-slide-to="1" aria-label="Slide 2"></button>
+									<button type="button" data-bs-target="#newArrvials"
+										data-bs-slide-to="2" aria-label="Slide 3"></button>
+								</div>
+								<div class="carousel-inner">
+									<div class="carousel-item active">
+										<div class="d-flex justify-content-between">
+											<div class="content-products-item"
+												th:each="product : ${listProductDESCs1}">
+												<a th:href="@{/product/{id}(id=${product.productId})}">
+													<img th:src="${product.images[0].link}">
+													<div class="name-brand" th:text="${product.brand}"></div>
+													<h6 class="name-prod" style="height: 30px;"
+														th:text="${product.productName}"></h6>
+												</a>
+												<div class="price-prod"
+													th:text="${#numbers.formatDecimal(product.price,3,'POINT',0,'COMMA')}+đ"></div>
+												<div class="buy-or-cart d-flex justify-content-between">
+													<a href="#">Mua ngay</a> <a href="#">Thêm giỏ hàng</a>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="carousel-item">
+										<div class="d-flex justify-content-between">
+											<div class="content-products-item"
+												th:each="product : ${listProductDESCs2}">
+												<a th:href="@{/product/{id}(id=${product.productId})}">
+													<img th:src="${product.images[0].link}">
+													<div class="name-brand" th:text="${product.brand}"></div>
+													<h6 class="name-prod" style="height: 30px;"
+														th:text="${product.productName}"></h6>
+												</a>
+												<div class="price-prod"
+													th:text="${#numbers.formatDecimal(product.price,3,'POINT',0,'COMMA')}+đ"></div>
+												<div class="buy-or-cart d-flex justify-content-between">
+													<a href="#">Mua ngay</a> <a href="#">Thêm giỏ hàng</a>
+												</div>
+											</div>
+
+										</div>
+									</div>
+									<div class="carousel-item">
+										<div class="d-flex justify-content-between">
+											<div class="content-products-item"
+												th:each="product : ${listProductDESCs3}">
+												<a th:href="@{/product/{id}(id=${product.productId})}">
+													<img th:src="${product.images[0].link}">
+													<div class="name-brand" th:text="${product.brand}"></div>
+													<h6 class="name-prod" style="height: 30px;"
+														th:text="${product.productName}"></h6>
+												</a>
+												<div class="price-prod"
+													th:text="${#numbers.formatDecimal(product.price,3,'POINT',0,'COMMA')}+đ"></div>
+												<div class="buy-or-cart d-flex justify-content-between">
+													<a href="#">Mua ngay</a> <a href="#">Thêm giỏ hàng</a>
+												</div>
+											</div>
+
+										</div>
+									</div>
+								</div>
+								<button class="carousel-control-prev" type="button"
+									data-bs-target="#newArrvials" data-bs-slide="prev">
+									<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+									<span class="visually-hidden">Previous</span>
+								</button>
+								<button class="carousel-control-next" type="button"
+									data-bs-target="#newArrvials" data-bs-slide="next">
+									<span class="carousel-control-next-icon" aria-hidden="true"></span>
+									<span class="visually-hidden">Next</span>
+								</button>
+							</div>
+						</div>
+					</section>
+					<section class="promotional-products">
+						<div class="d-flex justify-content-between">
+							<h3 class="p-2">Sản phẩm khuyến mãi</h3>
+							<span class="p-2 view-all"><a href="#">Xem thêm</a></span>
+						</div>
+						<div class="content-products">
+							<div id="promotionalProducts" class="carousel slide">
+								<div class="carousel-indicators">
+									<button type="button" data-bs-target="#promotionalProducts"
+										data-bs-slide-to="0" class="active" aria-current="true"
+										aria-label="Slide 1"></button>
+									<button type="button" data-bs-target="#promotionalProducts"
+										data-bs-slide-to="1" aria-label="Slide 2"></button>
+									<button type="button" data-bs-target="#promotionalProducts"
+										data-bs-slide-to="2" aria-label="Slide 3"></button>
+								</div>
+								<div class="carousel-inner">
+									<div class="carousel-item active">
+										<div class="d-flex justify-content-between">
+											<div class="content-products-item"
+												th:each="product : ${listProducts1}">
+												<a th:href="@{/product/{id}(id=${product.productId})}">
+													<img th:src="${product.images[0].link}">
+													<div class="name-brand" th:text="${product.brand}"></div>
+													<h6 class="name-prod" style="height: 30px;"
+														th:text="${product.productName}"></h6>
+												</a>
+												<div class="price-prod"
+													th:text="${#numbers.formatDecimal(product.price,3,'POINT',0,'COMMA')}+đ"></div>
+												<div class="buy-or-cart d-flex justify-content-between">
+													<a href="#">Mua ngay</a> <a href="#">Thêm giỏ hàng</a>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="carousel-item">
+										<div class="d-flex justify-content-between">
+											<div class="content-products-item"
+												th:each="product : ${listProducts2}">
+												<a th:href="@{/product/{id}(id=${product.productId})}">
+													<img th:src="${product.images[0].link}">
+													<div class="name-brand" th:text="${product.brand}"></div>
+													<h6 class="name-prod" style="height: 30px;"
+														th:text="${product.productName}"></h6>
+												</a>
+												<div class="price-prod"
+													th:text="${#numbers.formatDecimal(product.price,3,'POINT',0,'COMMA')}+đ"></div>
+												<div class="buy-or-cart d-flex justify-content-between">
+													<a href="#">Mua ngay</a> <a href="#">Thêm giỏ hàng</a>
+												</div>
+											</div>
+
+										</div>
+									</div>
+									<div class="carousel-item">
+										<div class="d-flex justify-content-between">
+											<div class="content-products-item"
+												th:each="product : ${listProducts3}">
+												<a th:href="@{/product/{id}(id=${product.productId})}">
+													<img th:src="${product.images[0].link}">
+													<div class="name-brand" th:text="${product.brand}"></div>
+													<h6 class="name-prod" style="height: 30px;"
+														th:text="${product.productName}"></h6>
+												</a>
+												<div class="price-prod"
+													th:text="${#numbers.formatDecimal(product.price,3,'POINT',0,'COMMA')}+đ"></div>
+												<div class="buy-or-cart d-flex justify-content-between">
+													<a href="#">Mua ngay</a> <a href="#">Thêm giỏ hàng</a>
+												</div>
+											</div>
+
+										</div>
+									</div>
+								</div>
+								<button class="carousel-control-prev" type="button"
+									data-bs-target="#promotionalProducts" data-bs-slide="prev">
+									<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+									<span class="visually-hidden">Previous</span>
+								</button>
+								<button class="carousel-control-next" type="button"
+									data-bs-target="#promotionalProducts" data-bs-slide="next">
+									<span class="carousel-control-next-icon" aria-hidden="true"></span>
+									<span class="visually-hidden">Next</span>
+								</button>
+							</div>
+						</div>
+					</section>
+					<section class="fashion-news">
+						<div class="d-flex justify-content-between">
+							<h3 class="p-2">Tin tức</h3>
+							<span class="p-2 view-all"><a href="#">Xem thêm</a></span>
+						</div>
+						<div class="content-fashion-news">
+							<div class="d-flex justify-content-evenly">
+								<div class="fashion-news-item">
+									<a href="#"> <img
+										src="https://kingshoes.vn/data/upload/media/cach-do-size-giay-chuan-tai-viet-nam-US-UK-Chuan-xac-tai-KINGSHOES-VN-tphcm-tanbinh-1533788373-.jpg"
+										alt="news-img">
+										<div class="news-name">CÁCH ĐO CỠ CHÂN VÀ XÁC ĐỊNH SIZE
+											GIÀY VIỆT NAM, US, UK</div>
+									</a>
+									<div class="news-info">created-date - creator-name</div>
+								</div>
+								<div class="fashion-news-item">
+									<a href="#"> <img
+										src="https://tamanh.net/wp-content/uploads/2021/07/phan-biet-hang-authentic-replica-fake-2.jpg"
+										alt="news-img">
+										<div class="news-name">AUTHENTICS, REPLICA, FAKE LÀ GÌ?
+											PHÂN BIỆT HÀNG HIỆU, HÀNG NHÁI</div>
+									</a>
+									<div class="news-info">created-date - creator-name</div>
+								</div>
+								<div class="fashion-news-item">
+									<a href="#"> <img
+										src="https://kingshoes.vn/data/upload/media/cach-do-size-giay-chuan-tai-viet-nam-US-UK-Chuan-xac-tai-KINGSHOES-VN-tphcm-tanbinh-1533788373-.jpg"
+										alt="news-img">
+										<div class="news-name">CÁCH ĐO CỠ CHÂN VÀ XÁC ĐỊNH SIZE
+											GIÀY VIỆT NAM, US, UK</div>
+									</a>
+									<div class="news-info">created-date - creator-name</div>
+								</div>
+								<div class="fashion-news-item">
+									<a href="#"> <img
+										src="https://tamanh.net/wp-content/uploads/2021/07/phan-biet-hang-authentic-replica-fake-2.jpg"
+										alt="news-img">
+										<div class="news-name">AUTHENTICS, REPLICA, FAKE LÀ GÌ?
+											PHÂN BIỆT HÀNG HIỆU, HÀNG NHÁI</div>
+									</a>
+									<div class="news-info">created-date - creator-name</div>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+			</main>
+			<footer>
+				<div class="footer-content">
+					<div class="d-flex justify-content-between">
+						<div class="p-2">
+							<h5>Về chúng tôi</h5>
+							<ul class="navbar-nav">
+								<li class="nav-item"><a href="#">Giới thiệu</a></li>
+								<li class="nav-item"><a href="#">Hệ thống của hàng</a></li>
+							</ul>
+						</div>
+						<div class="p-2">
+							<h5>Hỗ trợ khách hàng</h5>
+							<ul class="navbar-nav">
+								<li class="nav-item"><a href="#">Chính sánh khách hàng</a></li>
+								<li class="nav-item"><a href="#">Chính sách đổi trả</a></li>
+								<li class="nav-item"><a href="#">Chính sách bảo hành</a></li>
+								<li class="nav-item"><a href="#">Chính sách giao hàng</a></li>
+								<li class="nav-item"><a href="#">Chính sách bảo mật</a></li>
+								<li class="nav-item"><a href="#">Câu hỏi thường gặp</a></li>
+							</ul>
+						</div>
+						<div class="p-2">
+							<h5>Tuyển dụng</h5>
+							<ul class="navbar-nav">
+								<li class="nav-item"><a href="#">Tuyển dụng</a></li>
+							</ul>
+						</div>
+						<div class="p-2">
+							<h5>Địa chỉ - Liên hệ</h5>
+							<ul class="navbar-nav">
+								<li class="nav-item"><a href="#">Địa chỉ</a></li>
+							</ul>
+						</div>
+						<div class="p-2">
+							<h5>Kết nối với chúng tôi</h5>
+							<ul class="navbar-nav">
+								<li class="nav-item"><a href="#"><i
+										class="fa-brands fa-tiktok"></i>Tiktok</a></li>
+								<li class="nav-item"><a href="#"><i
+										class="fa-brands fa-twitter"></i>Twitter</a></li>
+								<li class="nav-item"><a href="#"><i
+										class="fa-brands fa-youtube"></i>Youtube</a></li>
+								<li class="nav-item"><a href="#"><i
+										class="fa-brands fa-facebook"></i>Facebook</a></li>
+								<li class="nav-item"><a href="#"><i
+										class="fa-brands fa-instagram"></i>Instagram</a></li>
+
+								<li class="nav-item"><a href="#">Hotline: 19009191</a></li>
+								<li class="nav-item"><a href="#">Email:
+										cskhABC@gmai.com</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="d-flex justify-content-between">
+						<div class="p-2 d-flex align-items-center">
+							<span>Copyright © 2023 ABC</span>
+						</div>
+						<div class="p-2 d-flex align-items-center">
+							<span> Thanh toán: <i class="fa-solid fa-money-bill"></i>
+								<i class="fa-brands fa-cc-visa"></i> <i
+								class="fa-brands fa-cc-mastercard"></i>
+							</span>
+						</div>
+					</div>
+				</div>
+			</footer>
+		</div>
+	</form>
+
+	<script type="text/javascript" th:src="@{/js/navbar.js}"></script>
+</body>
+
+</html>

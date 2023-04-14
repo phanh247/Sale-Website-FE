@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chi tiết sản phẩm</title>
+
+<!-- css -->
+<link rel="stylesheet" type="text/css" th:href="@{/css/navbar.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{/css/product-detail-page.css}">
+<!-- <link rel="stylesheet" type="text/css" th:href="@{/css/login-form.css}"> -->
+<!--     <link rel="stylesheet" href="/LAYOUT/CSS/detail-product-page.css"> -->
+<!--     <link rel="stylesheet" href="/LAYOUT/CSS/navbar.css"> -->
+
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+	integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<!-- js -->
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+	crossorigin="anonymous"></script>
+
+<!-- <script type="text/javascript" th:src="@{/js/detail-product.js}"></script>
+<script type="text/javascript" th:src="@{/js/login.js}"></script> -->
+<script src="https://kit.fontawesome.com/c39bd3b109.js"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+</head>
+
+<body>
+	<form th:action="@{/product/{id}(id=${product.productId})}"
+		method="post">
+		<div class="body-container">
+			<div class="top-bar">
+				<div class="container-fluid">
+					<div class="d-flex justify-content-between">
+						<div>
+							<ul class="topbar-left p-2">
+								<li><span><i class="fa-solid fa-phone-volume"></i>Hotline:
+										19009191</span></li>
+							</ul>
+						</div>
+						<div>
+							<ul class="topbar-right d-flex justify-content-end">
+								<li class="p-2" th:unless="${session.username} == null"><a
+									th:href="@{/check-order}"><span>Tra cứu đơn hàng</span></a></li>
+								<li class="p-2" th:if="${session.username} == null"><a
+									th:href="@{/login}"><span>Tra cứu đơn hàng</span></a></li>
+								<li class="p-2 " th:if="${session.username} == null"><a
+									th:href="@{/login}"><i class="fa-solid fa-user"></i><span>Đăng
+											nhập</span></a></li>
+								<li class="p-2 admin-menu"
+									th:unless="${session.username} == null"><a><i
+										class="fa-solid fa-user"></i><span
+										th:text="${session.username}"></span></a></li>
+								<li class="p-2"><a th:href="@{/cart}"><i
+										class="fa-solid fa-cart-shopping"></i><span>Giỏ hàng</span></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top"
+				data-bs-theme="dark">
+				<div class="container-fluid">
+					<a class="navbar-brand" th:href="@{/}">Logo</a>
+					<button class="navbar-toggler" type="button"
+						data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+						aria-controls="navbarSupportedContent" aria-expanded="false"
+						aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarSupportedContent">
+						<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+							<li class="nav-item dropdown"><a class="nav-link" href="#"
+								data-bs-toggle="dropdown" aria-expanded="false">SẢN PHẨM MỚI</a>
+								<div class="dropdown-menu">
+									<a class="dropdown-item" href="#">Action</a> <a
+										class="dropdown-item" href="#">Action</a> <a
+										class="dropdown-item" href="#">Action</a>
+								</div></li>
+							<li class="nav-item dropdown"
+								th:each="category : ${listCategories}"><a class="nav-link"
+								th:href="@{/category/{id}(id=${category.categoryId})}"
+								data-bs-toggle="dropdown" aria-expanded="false"
+								th:text="${category.categoryName}"></a>
+								<div class="dropdown-menu">
+									<a class="dropdown-item"
+										th:href="@{/category/{id}?type=Nam(id=${category.categoryId})}">Nam</a>
+									<a class="dropdown-item"
+										th:href="@{/category/{id}?type=Nữ(id=${category.categoryId})}">Nữ</a>
+									<a class="dropdown-item"
+										th:href="@{/category/{id}?type=Unisex(id=${category.categoryId})}">Unisex</a>
+								</div></li>
+							<li class="nav-item dropdown"><a class="nav-link" href="#"
+								aria-expanded="false">TIN TỨC</a></li>
+						</ul>
+						<div class="d-flex" role="search">
+							<input class="form-control me-2" type="search"
+								placeholder="Search" aria-label="Search">
+							<button class="btn btn-outline-success" type="submit">
+								<i class="fa-solid fa-magnifying-glass"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+			</nav>
+			<main>
+				<div class="product-detail">
+					<div class="d-flex product-detail-info">
+						<div class="block-left content-products">
+							<div id="productDetailInfo" class="carousel slide">
+								<div class="carousel-indicators slide-image">
+									<div class="button-image active"
+										data-bs-target="#productDetailInfo" data-bs-slide-to="0"
+										aria-label="Slide 1">
+										<img th:src="${product.images[0].link}" alt="...">
+									</div>
+									<div class="button-image" data-bs-target="#productDetailInfo"
+										data-bs-slide-to="1" aria-label="Slide 2">
+										<img th:src="${product.images[1].link}" alt="...">
+									</div>
+									<div class="button-image" data-bs-target="#productDetailInfo"
+										data-bs-slide-to="2" aria-label="Slide 3">
+										<img th:src="${product.images[2].link}" alt="...">
+									</div>
+									<div class="button-image" data-bs-target="#productDetailInfo"
+										data-bs-slide-to="3" aria-label="Slide 4">
+										<img th:src="${product.images[3].link}" alt="...">
+									</div>
+
+								</div>
+
+								<div class="carousel-inner">
+									<div class="carousel-item active">
+										<img th:src="${product.images[0].link}" alt="...">
+									</div>
+									<div class="carousel-item">
+										<img th:src="${product.images[1].link}" alt="...">
+									</div>
+									<div class="carousel-item">
+										<img th:src="${product.images[2].link}" alt="...">
+									</div>
+									<div class="carousel-item">
+										<img th:src="${product.images[3].link}" alt="...">
+									</div>
+								</div>
+								<button class="carousel-control-prev" type="button"
+									data-bs-target="#productDetailInfo" data-bs-slide="prev">
+									<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+									<span class="visually-hidden">Previous</span>
+								</button>
+								<button class="carousel-control-next" type="button"
+									data-bs-target="#productDetailInfo" data-bs-slide="next">
+									<span class="carousel-control-next-icon" aria-hidden="true"></span>
+									<span class="visually-hidden">Next</span>
+								</button>
+							</div>
+						</div>
+						<div class="block-right">
+							<div class="block-right-top">
+								<h5 class="prod-name" th:text="${product.productName}"></h5>
+								<div class="prod-brand" th:text="${product.brand}"></div>
+							</div>
+
+							<div class="block-right-bottom d-flex justify-content-between">
+								<div class="cover-left">
+									<div class="prod-identified d-flex justify-content-between">
+										<p>
+											Mã sản phẩm: <span th:text="${product.productId}"></span>
+										</p>
+										<p>Xuất xứ: Mỹ</p>
+									</div>
+									<div class="ratings">
+										<span>Đánh giá:</span> <span class="fa fa-star checked"></span>
+										<span class="fa fa-star checked"></span> <span
+											class="fa fa-star checked"></span> <span class="fa fa-star"></span>
+										<span class="fa fa-star"></span>
+									</div>
+									<div class="price-prod d-flex">
+										<p class="price-prod-new dbPrice"
+											th:text="${#numbers.formatDecimal(product.price,3,'POINT',0,'COMMA')}+đ"></p>
+										<p class="price-prod-old">2.633.000đ</p>
+										<p class="price-prod-percent">-17%</p>
+									</div>
+									<div class="general-prod">
+										<p>
+											Kiểu dáng: <span th:text="${product.description}"></span>
+										</p>
+										<p>
+											Giới tính: <span th:text="${product.type}"></span>
+										</p>
+										<p>
+											Màu sắc: <span th:text="${product.color}"></span>
+										</p>
+										<p
+											class="form-group justify-content-start align-items-center size-selection">
+											<label for="department">Kích thước:</label> <select
+												class="form-control" id="size" name="sizes">
+												<option value="0" selected="selected">select option</option>
+												<option value="35">35</option>
+												<option value="36">36</option>
+												<option value="37">37</option>
+												<option value="38">38</option>
+												<option value="39">39</option>
+												<option value="40">40</option>
+												<option value="41">41</option>
+												<option value="42">42</option>
+											</select>
+										</p>
+										<p>
+											Gọi đặt mua: <span>19001999</span>
+										</p>
+										<p>
+											Ưu đãi: <span>Freeship khu vực HCM</span>
+										</p>
+									</div>
+									<div class="cover-left-btn d-flex justify-content-between">
+										<button class="add-cart-btn" type="submit">THÊM VÀO
+											GIỎ</button>
+										<button class="buy-now-btn" type="button">
+											<a href="#">MUA NGAY</a>
+										</button>
+									</div>
+								</div>
+								<div class="cover-right">
+									<div id="advertisementBanner" class="carousel slide adv-banner"
+										data-bs-ride="carousel">
+										<div class="carousel-inner">
+											<div class="carousel-item active" data-bs-interval="3000">
+												<img
+													src="https://cdna.artstation.com/p/assets/images/images/036/002/188/large/m-n-vinit-img-20210322-204116-186.jpg?1616482578"
+													alt="...">
+											</div>
+											<div class="carousel-item" data-bs-interval="3000">
+												<img
+													src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/shoes-craze-sale-facebook-ad-design-template-b1d1738fd5e9e0f6e3152ec502a1c2e1_screen.jpg?ts=1567579016"
+													alt="...">
+											</div>
+											<div class="carousel-item" data-bs-interval="3000">
+												<img
+													src="https://fiverr-res.cloudinary.com/images/q_auto,f_auto/gigs/137483385/original/95a8b34bebb1f7c503c686ac692664ef5e8f1d3d/design-a-sports-shoes-sales-offer-for-advertisement.jpg"
+													alt="...">
+											</div>
+										</div>
+									</div>
+									<div class="adv-content">
+										<div>
+											<i class="bi bi-check-lg"></i>Miễn phí đổi trả hàng trong 7
+											ngày
+										</div>
+										<div>
+											<i class="bi bi-check-lg"></i>Mua nhiều tích điểm
+										</div>
+										<div>
+											<i class="bi bi-check-lg"></i>Kiểm tra hàng trước khi nhận
+										</div>
+										<div>
+											<i class="bi bi-check-lg"></i>Hoàn tiền nếu phát hiện hàng
+											giả
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<div class="suggest-product">
+						<div class="d-flex justify-content-between">
+							<h4 class="p-2">Gợi ý cho bạn</h4>
+							<span class="p-2 view-all"><a href="#">Xem thêm</a></span>
+						</div>
+						<div class="content-products">
+							<div id="suggestProduct" class="carousel slide">
+								<div class="carousel-indicators">
+									<button type="button" data-bs-target="#suggestProduct"
+										data-bs-slide-to="0" class="active" aria-current="true"
+										aria-label="Slide 1"></button>
+									<button type="button" data-bs-target="#suggestProduct"
+										data-bs-slide-to="1" aria-label="Slide 2"></button>
+									<button type="button" data-bs-target="#suggestProduct"
+										data-bs-slide-to="2" aria-label="Slide 3"></button>
+								</div>
+								<div class="carousel-inner">
+									<div class="carousel-item active">
+										<div class="d-flex justify-content-between">
+											<div class="content-products-item"
+												th:each="product : ${listProducts1}">
+												<a th:href="@{/product/{id}(id=${product.productId})}">
+													<img th:src="${product.images[0].link}">
+													<div class="name-brand" th:text="${product.brand}"></div>
+													<h6 class="name-prod" th:text="${product.productName}"></h6>
+												</a>
+												<div class="price-prod"
+													th:text="${#numbers.formatDecimal(product.price,3,'POINT',0,'COMMA')}+đ"></div>
+												<div class="buy-or-cart d-flex justify-content-between">
+													<a href="#">Mua ngay</a> <a href="#">Thêm giỏ hàng</a>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="carousel-item">
+										<div class="d-flex justify-content-between">
+											<div class="content-products-item"
+												th:each="product : ${listProducts2}">
+												<a th:href="@{/product/{id}(id=${product.productId})}">
+													<img th:src="${product.images[0].link}">
+													<div class="name-brand" th:text="${product.brand}"></div>
+													<h6 class="name-prod" th:text="${product.productName}"></h6>
+												</a>
+												<div class="price-prod"
+													th:text="${#numbers.formatDecimal(product.price,3,'POINT',0,'COMMA')}+đ"></div>
+												<div class="buy-or-cart d-flex justify-content-between">
+													<a href="#">Mua ngay</a> <a href="#">Thêm giỏ hàng</a>
+												</div>
+											</div>
+
+										</div>
+									</div>
+									<div class="carousel-item">
+										<div class="d-flex justify-content-between">
+											<div class="content-products-item"
+												th:each="product : ${listProducts3}">
+												<a th:href="@{/product/{id}(id=${product.productId})}">
+													<img th:src="${product.images[0].link}">
+													<div class="name-brand" th:text="${product.brand}"></div>
+													<h6 class="name-prod" th:text="${product.productName}"></h6>
+												</a>
+												<div class="price-prod"
+													th:text="${#numbers.formatDecimal(product.price,3,'POINT',0,'COMMA')}+đ"></div>
+												<div class="buy-or-cart d-flex justify-content-between">
+													<a href="#">Mua ngay</a> <a href="#">Thêm giỏ hàng</a>
+												</div>
+											</div>
+
+										</div>
+									</div>
+								</div>
+								<button class="carousel-control-prev" type="button"
+									data-bs-target="#suggestProduct" data-bs-slide="prev">
+									<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+									<span class="visually-hidden">Previous</span>
+								</button>
+								<button class="carousel-control-next" type="button"
+									data-bs-target="#suggestProduct" data-bs-slide="next">
+									<span class="carousel-control-next-icon" aria-hidden="true"></span>
+									<span class="visually-hidden">Next</span>
+								</button>
+							</div>
+						</div>
+					</div>
+					<div class="product-description d-flex justify-content-between">
+						<section>
+							<div class="product-description-content">
+								<h4 class="text-start">Mô tả sản phẩm</h4>
+								<div class="product-desc-container">
+									<img th:src="${product.images[0].link}">
+									<h5>Về thương hiệu</h5>
+									<p class="product-description-text">
+										- Thương hiệu của Đức.<br> - Được thành lập vào năm 1924.<br>
+										- Thành tựu: Thương hiệu giày thể thao đứng thứ 2 thế giới chỉ
+										sau Nike, tính đến năm 2020.<br> - Các dòng sản phẩm
+										chính: giày thể thao, quần áo thể thao và phụ kiện thể thao
+										phục vụ cho nhu cầu luyện tập các môn thể thao phổ biến, ở mọi
+										độ tuổi và giới tính.
+									</p>
+									<img
+										src="https://www.bostonmagazine.com/wp-content/uploads/sites/2/2021/09/style_store-1.jpg"
+										alt="">
+									<h5>Đặc điểm sản phẩm</h5>
+									<p class="product-description-text">Phần thân giày sử dụng
+										chất liệu vải dệt có độ bền cao cùng khả năng chống phai màu
+										tốt, dễ dàng vệ sinh lại khi cần thiết. Sử dụng công nghệ
+										Boost có cơ chế đàn hồi và hoàn trả năng lượng tối ưu giúp tạo
+										cảm giác thoải mái cho đôi chân. Đế giày Adidas làm bằng cao
+										su có khả năng chống mài mòn cao cùng độ bám dính với đất tốt,
+										tốc độ biến dạng thấp. Với chất liệu và công nghệ thoáng khí,
+										giày Adidas FX0031 sẽ là lựa chọn phù hợp của các bạn nam chạy
+										bộ vào những ngày nóng</p>
+									<img th:src="${product.images[1].link}" alt="">
+									<p class="product-description-text">Đôi giày Adidas với họa
+										tiết hình tròn được thiết kế hấp dẫn khiến bạn sẽ có cảm giác
+										thoải mái sử dụng khi tập thể thao và dạo phố gặp bạn bè</p>
+									<img th:src="${product.images[2].link}" alt="">
+									<h5>Cách bảo quản</h5>
+									<ul>
+										<li>Không dùng thuốc tẩy</li>
+										<li>Tránh phơi trực tiếp dưới ánh nắng mặt trời</li>
+										<li>Giặt tay</li>
+										<li>Ủi với nhiệt độ thấp</li>
+										<li>Giặt bằng nước có nhiệt độ khoảng 40 độ C</li>
+										<li>Không ngâm trong xà phòng quá 1h trước khi giặt</li>
+										<li>Không sấy khô</li>
+										<li>Không ủi lên hình in</li>
+										<li>Không giặt chung với sản phẩm khác màu</li>
+										<li>Chỉ sử dụng chất tẩy rửa nhẹ</li>
+									</ul>
+									<h5>Thông tin chi tiết</h5>
+									<table class="product-general-info-table">
+										<tr>
+											<td>Thương hiệu</td>
+											<td th:text="${product.brand}"></td>
+										</tr>
+										<tr>
+											<td>Xuất xứ</td>
+											<td>Đức</td>
+										</tr>
+										<tr>
+											<td>Màu sắc</td>
+											<td>Trắng</td>
+										</tr>
+										<tr>
+											<td>Chất liệu</td>
+											<td>Vải dệt</td>
+										</tr>
+										<tr>
+											<td>Giới tính</td>
+											<td>Unisex</td>
+										</tr>
+										<tr>
+											<td>Loại giày</td>
+											<td>Thể thao chuyên dụng</td>
+										</tr>
+										<tr>
+											<td>Kiểu dáng</td>
+											<td>Giày cổ thấp</td>
+										</tr>
+									</table>
+								</div>
+							</div>
+							<div class="product-comment">
+								<h4>Đánh giá</h4>
+								<div
+									class="product-comment-rating row d-flex align-items-center">
+									<div class="rating-mark col-2">
+										<div class="rating-mark-number text-center">5/5</div>
+										<div class="rating-icon text-center">
+											<i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i>
+											<i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i>
+											<i class="fa-solid fa-star"></i>
+										</div>
+									</div>
+									<div class="rating-vote col-7">
+										<div class="five-star">
+											<i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i>
+											<i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i>
+											<i class="fa-solid fa-star"></i> <span>(100)</span>
+											<div class="progress" style="height: 4px">
+												<div class="progress-bar w-100 bg-dark bg-opacity-50"
+													role="progressbar" aria-label="Basic example"
+													aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+											</div>
+										</div>
+										<div class="four-star">
+											<i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i>
+											<i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i>
+											<i class="fa-regular fa-star"></i> <span>(0)</span>
+											<div class="progress" style="height: 4px">
+												<div class="progress-bar w-75 bg-dark bg-opacity-50"
+													role="progressbar" aria-label="Basic example"
+													aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+											</div>
+										</div>
+										<div class="three-star">
+											<i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i>
+											<i class="fa-solid fa-star"></i> <i
+												class="fa-regular fa-star"></i> <i
+												class="fa-regular fa-star"></i> <span>(0)</span>
+											<div class="progress" style="height: 4px">
+												<div class="progress-bar w-25 bg-dark bg-opacity-50"
+													role="progressbar" aria-label="Basic example"
+													aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+											</div>
+										</div>
+										<div class="two-star">
+											<i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i>
+											<i class="fa-regular fa-star"></i> <i
+												class="fa-regular fa-star"></i> <i
+												class="fa-regular fa-star"></i> <span>(0)</span>
+											<div class="progress" style="height: 4px">
+												<div class="progress-bar bg-dark bg-opacity-50"
+													role="progressbar" aria-label="Basic example"
+													aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+											</div>
+										</div>
+										<div class="one-star">
+											<i class="fa-solid fa-star"></i> <i
+												class="fa-regular fa-star"></i> <i
+												class="fa-regular fa-star"></i> <i
+												class="fa-regular fa-star"></i> <i
+												class="fa-regular fa-star"></i> <span>(0)</span>
+											<div class="progress" style="height: 4px">
+												<div class="progress-bar bg-dark bg-opacity-50"
+													role="progressbar" aria-label="Basic example"
+													aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+											</div>
+										</div>
+									</div>
+									<div class="write-comment col-3">
+										<div class="text-center">Nhận xét về sản phẩm</div>
+										<button class="write-cmt-btn">VIẾT NHẬN XÉT</button>
+									</div>
+								</div>
+								<div class="customer-comments">
+									<div class="customer-comment-container">
+										<img
+											src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+											alt="">
+										<div class="customer-comment-detail">
+											<div class="customer-rating-icon">
+												<i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i>
+												<i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i>
+												<i class="fa-solid fa-star"></i>
+											</div>
+											<div class="customer-comment-info">
+												<span class="customer-name fw-bold">Trần Văn A</span> <span
+													class="comment-time">19:00, 10/03/2023</span>
+											</div>
+											<div class="customer-comment-text">Lorem ipsum dolor
+												sit amet consectetur adipisicing elit. Nesciunt perspiciatis
+												necessitatibus distinctio! Odio perspiciatis, obcaecati
+												error necessitatibus doloremque eius! Saepe itaque dicta
+												porro sapiente natus quisquam perferendis mollitia dolore
+												alias?</div>
+										</div>
+									</div>
+									<div class="customer-comment-container">
+										<img
+											src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+											alt="">
+										<div class="customer-comment-detail">
+											<div class="customer-rating-icon">
+												<i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i>
+												<i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i>
+												<i class="fa-solid fa-star"></i>
+											</div>
+											<div class="customer-comment-info">
+												<span class="customer-name fw-bold">Trần Văn A</span> <span
+													class="comment-time">19:00, 10/03/2023</span>
+											</div>
+											<div class="customer-comment-text">Lorem ipsum dolor
+												sit amet consectetur adipisicing elit. Nesciunt perspiciatis
+												necessitatibus distinctio! Odio perspiciatis, obcaecati
+												error necessitatibus doloremque eius! Saepe itaque dicta
+												porro sapiente natus quisquam perferendis mollitia dolore
+												alias?</div>
+										</div>
+									</div>
+									<div class="customer-comment-container">
+										<img
+											src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+											alt="">
+										<div class="customer-comment-detail">
+											<div class="customer-rating-icon">
+												<i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i>
+												<i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i>
+												<i class="fa-solid fa-star"></i>
+											</div>
+											<div class="customer-comment-info">
+												<span class="customer-name fw-bold">Trần Văn A</span> <span
+													class="comment-time">19:00, 10/03/2023</span>
+											</div>
+											<div class="customer-comment-text">Lorem ipsum dolor
+												sit amet consectetur adipisicing elit. Nesciunt perspiciatis
+												necessitatibus distinctio! Odio perspiciatis, obcaecati
+												error necessitatibus doloremque eius! Saepe itaque dicta
+												porro sapiente natus quisquam perferendis mollitia dolore
+												alias?</div>
+										</div>
+									</div>
+									<div class="customer-comment-container">
+										<img
+											src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+											alt="">
+										<div class="customer-comment-detail">
+											<div class="customer-rating-icon">
+												<i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i>
+												<i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i>
+												<i class="fa-solid fa-star"></i>
+											</div>
+											<div class="customer-comment-info">
+												<span class="customer-name fw-bold">Trần Văn A</span> <span
+													class="comment-time">19:00, 10/03/2023</span>
+											</div>
+											<div class="customer-comment-text">Lorem ipsum dolor
+												sit amet consectetur adipisicing elit. Nesciunt perspiciatis
+												necessitatibus distinctio! Odio perspiciatis, obcaecati
+												error necessitatibus doloremque eius! Saepe itaque dicta
+												porro sapiente natus quisquam perferendis mollitia dolore
+												alias?</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</section>
+						<div class="product-sidebar">
+							<div class="interested-product">
+								<h5>Có thể bạn quan tâm?</h5>
+								<div class="relative-product-tag">
+									<a href="#" class="btn">Đồng hồ</a> <a href="#" class="btn">Túi
+										xách</a> <a href="#" class="btn">Dép</a> <a href="#" class="btn">Balo</a>
+									<a href="#" class="btn">Quần áo</a> <a href="#" class="btn">Phụ
+										kiện</a> <a href="#" class="btn">Nón</a>
+								</div>
+							</div>
+
+							<div class="similar-product">
+								<h5>Sản phẩm tương tự</h5>
+								<div class="similar-product-item"
+									th:each="product : ${listProducts4}">
+									<a th:href="@{/product/{id}(id=${product.productId})}"
+										class="d-flex">
+										<div>
+											<img th:src="${product.images[0].link}">
+										</div>
+										<div>
+											<p class="name-brand" th:text="${product.brand}"></p>
+											<h6 class="name-prod" th:text="${product.productName}"></h6>
+											<p class="price-prod"
+												th:text="${#numbers.formatDecimal(product.price,3,'POINT',0,'COMMA')}+đ"></p>
+										</div>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="other-product">
+						<div class="d-flex justify-content-between">
+							<h4 class="p-2">Sản phẩm khác</h4>
+							<span class="p-2 view-all"><a href="#">Xem thêm</a></span>
+						</div>
+						<div class="content-products">
+							<div id="otherProduct" class="carousel slide">
+								<div class="carousel-indicators">
+									<button type="button" data-bs-target="#otherProduct"
+										data-bs-slide-to="0" class="active" aria-current="true"
+										aria-label="Slide 1"></button>
+									<button type="button" data-bs-target="#otherProduct"
+										data-bs-slide-to="1" aria-label="Slide 2"></button>
+									<button type="button" data-bs-target="#otherProduct"
+										data-bs-slide-to="2" aria-label="Slide 3"></button>
+								</div>
+								<div class="carousel-inner">
+									<div class="carousel-item active">
+										<div class="d-flex justify-content-between">
+											<div class="content-products-item"
+												th:each="product : ${listProducts1}">
+												<a th:href="@{/product/{id}(id=${product.productId})}">
+													<img th:src="${product.images[0].link}">
+													<div class="name-brand" th:text="${product.brand}"></div>
+													<h6 class="name-prod" th:text="${product.productName}"></h6>
+												</a>
+												<div class="price-prod"
+													th:text="${#numbers.formatDecimal(product.price,3,'POINT',0,'COMMA')}+đ"></div>
+												<div class="buy-or-cart d-flex justify-content-between">
+													<a href="#">Mua ngay</a> <a href="#">Thêm giỏ hàng</a>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="carousel-item">
+										<div class="d-flex justify-content-between">
+											<div class="content-products-item"
+												th:each="product : ${listProducts2}">
+												<a th:href="@{/product/{id}(id=${product.productId})}">
+													<img th:src="${product.images[0].link}">
+													<div class="name-brand" th:text="${product.brand}"></div>
+													<h6 class="name-prod" th:text="${product.productName}"></h6>
+												</a>
+												<div class="price-prod"
+													th:text="${#numbers.formatDecimal(product.price,3,'POINT',0,'COMMA')}+đ"></div>
+												<div class="buy-or-cart d-flex justify-content-between">
+													<a href="#">Mua ngay</a> <a href="#">Thêm giỏ hàng</a>
+												</div>
+											</div>
+
+										</div>
+									</div>
+									<div class="carousel-item">
+										<div class="d-flex justify-content-between">
+											<div class="content-products-item"
+												th:each="product : ${listProducts3}">
+												<a th:href="@{/product/{id}(id=${product.productId})}">
+													<img th:src="${product.images[0].link}">
+													<div class="name-brand" th:text="${product.brand}"></div>
+													<h6 class="name-prod" th:text="${product.productName}"></h6>
+												</a>
+												<div class="price-prod"
+													th:text="${#numbers.formatDecimal(product.price,3,'POINT',0,'COMMA')}+đ"></div>
+												<div class="buy-or-cart d-flex justify-content-between">
+													<a href="#">Mua ngay</a> <a href="#">Thêm giỏ hàng</a>
+												</div>
+											</div>
+
+										</div>
+									</div>
+								</div>
+								<button class="carousel-control-prev" type="button"
+									data-bs-target="#otherProduct" data-bs-slide="prev">
+									<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+									<span class="visually-hidden">Previous</span>
+								</button>
+								<button class="carousel-control-next" type="button"
+									data-bs-target="#otherProduct" data-bs-slide="next">
+									<span class="carousel-control-next-icon" aria-hidden="true"></span>
+									<span class="visually-hidden">Next</span>
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</main>
+			<footer>
+				<div class="footer-content">
+					<div class="d-flex justify-content-between">
+						<div class="p-2">
+							<h5>Về chúng tôi</h5>
+							<ul class="navbar-nav">
+								<li class="nav-item"><a href="#">Giới thiệu</a></li>
+								<li class="nav-item"><a href="#">Hệ thống của hàng</a></li>
+							</ul>
+						</div>
+						<div class="p-2">
+							<h5>Hỗ trợ khách hàng</h5>
+							<ul class="navbar-nav">
+								<li class="nav-item"><a href="#">Chính sánh khách hàng</a></li>
+								<li class="nav-item"><a href="#">Chính sách đổi trả</a></li>
+								<li class="nav-item"><a href="#">Chính sách bảo hành</a></li>
+								<li class="nav-item"><a href="#">Chính sách giao hàng</a></li>
+								<li class="nav-item"><a href="#">Chính sách bảo mật</a></li>
+								<li class="nav-item"><a href="#">Câu hỏi thường gặp</a></li>
+							</ul>
+						</div>
+						<div class="p-2">
+							<h5>Tuyển dụng</h5>
+							<ul class="navbar-nav">
+								<li class="nav-item"><a href="#">Tuyển dụng</a></li>
+							</ul>
+						</div>
+						<div class="p-2">
+							<h5>Địa chỉ - Liên hệ</h5>
+							<ul class="navbar-nav">
+								<li class="nav-item"><a href="#">Địa chỉ</a></li>
+							</ul>
+						</div>
+						<div class="p-2">
+							<h5>Kết nối với chúng tôi</h5>
+							<ul class="navbar-nav">
+								<li class="nav-item"><a href="#"><i
+										class="fa-brands fa-tiktok"></i>Tiktok</a></li>
+								<li class="nav-item"><a href="#"><i
+										class="fa-brands fa-twitter"></i>Twitter</a></li>
+								<li class="nav-item"><a href="#"><i
+										class="fa-brands fa-youtube"></i>Youtube</a></li>
+								<li class="nav-item"><a href="#"><i
+										class="fa-brands fa-facebook"></i>Facebook</a></li>
+								<li class="nav-item"><a href="#"><i
+										class="fa-brands fa-instagram"></i>Instagram</a></li>
+
+								<li class="nav-item"><a href="#">Hotline: 19009191</a></li>
+								<li class="nav-item"><a href="#">Email:
+										cskhABC@gmai.com</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="d-flex justify-content-between">
+						<div class="p-2 d-flex align-items-center">
+							<span>Copyright © 2023 ABC</span>
+						</div>
+						<div class="p-2 d-flex align-items-center">
+							<span> Thanh toán: <i class="fa-solid fa-money-bill"></i>
+								<i class="fa-brands fa-cc-visa"></i> <i
+								class="fa-brands fa-cc-mastercard"></i>
+							</span>
+						</div>
+					</div>
+				</div>
+			</footer>
+		</div>
+	</form>
+
+	<script type="text/javascript" th:src="@{/js/navbar.js}"></script>
+</body>
+
+</html>

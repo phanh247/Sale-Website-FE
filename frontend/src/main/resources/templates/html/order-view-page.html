@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Chi tiết đơn hàng</title>
+    <!-- css -->
+<!--     <link rel="stylesheet" href="/LAYOUT/CSS/order-view-page.css"> -->
+<!--     <link rel="stylesheet" href="/LAYOUT/CSS/navbar.css"> -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/navbar.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/order-view-page.css}">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+        integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/c39bd3b109.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" th:src="@{/js/cart-page.js}"></script>
+    <script type="text/javascript" th:src="@{/js/login.js}"></script>
+</head>
+
+<body>
+    <form th:action="@{/account/order/detail}" method="get">
+        <div class="body-container">
+            <div class="top-bar">
+                <div class="container-fluid">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <ul class="topbar-left p-2">
+                                <li>
+                                    <span><i class="fa-solid fa-phone-volume"></i>Hotline: 19009191</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                           <ul class="topbar-right d-flex justify-content-end">
+								<li class="p-2" th:unless="${session.username} == null"><a
+									th:href="@{/check-order}"><span>Tra cứu đơn hàng</span></a></li>
+								<li class="p-2" th:if="${session.username} == null"><a
+									th:href="@{/login}"><span>Tra cứu đơn hàng</span></a></li>
+								<li class="p-2 " th:if="${condition} == 0">
+									<a th:href="@{/login}"><i class="fa-solid fa-user"></i><span>Đăng nhập</span></a>
+								</li>
+								<li  class="p-2 admin-menu" th:unless="${condition} == 0">
+									<a ><i class="fa-solid fa-user" ></i><span th:text="${session.username}"></span></a>
+								</li>
+								<li class="p-2"><a th:href="@{/cart}"><i
+										class="fa-solid fa-cart-shopping"></i><span>Giỏ hàng</span></a></li>
+							</ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top" data-bs-theme="dark">
+                <div class="container-fluid">
+                    <a class="navbar-brand" th:href="@{/}">Logo</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link" href="#" data-bs-toggle="dropdown" aria-expanded="false">SẢN PHẨM
+                                    MỚI</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Action</a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link" href="#" data-bs-toggle="dropdown" aria-expanded="false">ADIDAS</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Action</a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link" href="#" data-bs-toggle="dropdown" aria-expanded="false">NIKE</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Action</a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link" href="#" data-bs-toggle="dropdown" aria-expanded="false">PUMA</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Action</a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link" href="#" data-bs-toggle="dropdown" aria-expanded="false">SALE</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Action</a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link" href="#" aria-expanded="false">TIN TỨC</a>
+                            </li>
+                        </ul>
+                        <div class="d-flex" role="search">
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit"><i
+                                    class="fa-solid fa-magnifying-glass"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <main>
+                <div class="order-view">
+                    <h4 class="id-order">Đơn hàng #YM252470</h4>
+                    <p class="created-date">Ngày đặt hàng: <span>26/04/2019</span></p>
+                    <div>
+                        <h5>Chi tiết đơn hàng</h5>
+                        <table class="order-detail-content">
+                            <tbody>
+                                <tr>
+                                    <th>Sản phẩm</th>
+                                    <th>Tổng</th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="#">CONVERSE CHUCK '70 HI TONAL - DEEP WATERS/EGRET/BLACK</a>
+                                        <ul>
+                                            <li>Size: <span>40</span></li>
+                                            <li>Màu sắc: <span>Xanh dương</span></li>
+                                            <li>Số lượng: <span>2</span></li>
+                                        </ul>
+                                    </td>
+                                    <td class="total-price-prod">4.070.000đ</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="#">AIR JORDAN 1 ZOOM CMFT WOMEN'S UNIVERSITY BLUE - PHANTOM/UNIVERSITY
+                                            BLUE</a>
+                                        <ul>
+                                            <li>Size: <span>41</span></li>
+                                            <li>Màu sắc: <span>Xanh</span></li>
+                                            <li>Số lượng: <span>1</span></li>
+                                        </ul>
+                                    </td>
+                                    <td class="total-price-prod">3.590.000₫</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h5>Hóa đơn</h5>
+                        <table class="bill">
+                            <tbody>
+                                <tr>
+                                    <td>Tổng giá trị sản phẩm:</td>
+                                    <td>7.660.000đ</td>
+                                </tr>
+                                <tr>
+                                    <td>Giảm giá</td>
+                                    <td>0%</td>
+                                </tr>
+                                <tr>
+                                    <td>Phí vận chuyển</td>
+                                    <td>20.000đ</td>
+                                </tr>
+                                <tr>
+                                    <td>Tổng hóa đơn</td>
+                                    <td>7.680.000đ</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h5>Thông tin người nhận</h5>
+                        <table class="info-customer">
+                            <tbody>
+                                <tr>
+                                    <td>Tên người nhận</td>
+                                    <td>Trần Văn A</td>
+                                </tr>
+                                <tr>
+                                    <td>Số điện thoại</td>
+                                    <td>0123456789</td>
+                                </tr>
+                                <tr>
+                                    <td>Email</td>
+                                    <td>ad123@gmail.com</td>
+                                </tr>
+                                <tr>
+                                    <td>Địa chỉ</td>
+                                    <td>76 lê đình cẩn, phường tân tạo, quận bình tân TP.HCM</td>
+                                </tr>
+                                <tr>
+                                    <td>Phương thức thanh toán</td>
+                                    <td>Trả tiền mặt khi nhận hàng</td>
+                                </tr>
+                                <tr>
+                                    <td>Ghi chú</td>
+                                    <td>fsjfgjsdfsfajf</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+            <footer>
+                <div class="footer-content">
+                    <div class="d-flex justify-content-between">
+                        <div class="p-2">
+                            <h5>Về chúng tôi</h5>
+                            <ul class="navbar-nav">
+                                <li class="nav-item"><a href="#">Giới thiệu</a></li>
+                                <li class="nav-item"><a href="#">Hệ thống của hàng</a></li>
+                            </ul>
+                        </div>
+                        <div class="p-2">
+                            <h5>Hỗ trợ khách hàng</h5>
+                            <ul class="navbar-nav">
+                                <li class="nav-item"><a href="#">Chính sánh khách hàng</a></li>
+                                <li class="nav-item"><a href="#">Chính sách đổi trả</a></li>
+                                <li class="nav-item"><a href="#">Chính sách bảo hành</a></li>
+                                <li class="nav-item"><a href="#">Chính sách giao hàng</a></li>
+                                <li class="nav-item"><a href="#">Chính sách bảo mật</a></li>
+                                <li class="nav-item"><a href="#">Câu hỏi thường gặp</a></li>
+                            </ul>
+                        </div>
+                        <div class="p-2">
+                            <h5>Tuyển dụng</h5>
+                            <ul class="navbar-nav">
+                                <li class="nav-item"><a href="#">Tuyển dụng</a></li>
+                            </ul>
+                        </div>
+                        <div class="p-2">
+                            <h5>Địa chỉ - Liên hệ</h5>
+                            <ul class="navbar-nav">
+                                <li class="nav-item"><a href="#">Địa chỉ</a></li>
+                            </ul>
+                        </div>
+                        <div class="p-2">
+                            <h5>Kết nối với chúng tôi</h5>
+                            <ul class="navbar-nav">
+                                <li class="nav-item"><a href="#"><i class="fa-brands fa-tiktok"></i>Tiktok</a></li>
+                                <li class="nav-item"><a href="#"><i class="fa-brands fa-twitter"></i>Twitter</a></li>
+                                <li class="nav-item"><a href="#"><i class="fa-brands fa-youtube"></i>Youtube</a></li>
+                                <li class="nav-item"><a href="#"><i class="fa-brands fa-facebook"></i>Facebook</a></li>
+                                <li class="nav-item"><a href="#"><i class="fa-brands fa-instagram"></i>Instagram</a>
+                                </li>
+
+                                <li class="nav-item"><a href="#">Hotline: 19009191</a></li>
+                                <li class="nav-item"><a href="#">Email: cskhABC@gmai.com</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <div class="p-2 d-flex align-items-center">
+                            <span>Copyright © 2023 ABC</span>
+                        </div>
+                        <div class="p-2 d-flex align-items-center">
+                            <span>
+                                Thanh toán:
+                                <i class="fa-solid fa-money-bill"></i>
+                                <i class="fa-brands fa-cc-visa"></i>
+                                <i class="fa-brands fa-cc-mastercard"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </form>
+</body>
+
+</html>

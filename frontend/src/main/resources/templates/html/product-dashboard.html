@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Product Dashboard</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/dashboard.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{/css/product-dashboard.css}">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+<script src="https://kit.fontawesome.com/c39bd3b109.js"
+	crossorigin="anonymous"></script>
+</head>
+<body>
+	<form th:action="@{/product/dashboard}" method="get">
+		<div class="body-container">
+		<div class="dashboard__side-menu">
+				<h3>DPTS Store</h3>
+				<ul class="side-menu-container">
+					<li class=""><a th:href="@{/admin/dashboard}"><i
+							class="fa-solid fa-house"></i> Dashboard</a></li>
+					<li><a th:href="@{/admin/product}"><i
+							class="fa-brands fa-shopify"></i> Sản phẩm</a></li>
+					<li><a th:href="@{/admin/order}"><i
+							class="fa-solid fa-clipboard"></i> Đơn hàng</a></li>
+					<li><a th:href="@{/admin/user}"><i
+							class="fa-solid fa-user"></i> Thành viên</a></li>
+					<li><a th:href="@{/}"><i class="fa-solid fa-house"></i> Trang chủ</a></li>
+				</ul>
+
+			</div>
+			<div class="dashboard__content">
+				<div
+					class="dashboard-head d-flex align-items-center justify-content-between">
+					<div class="dashboard-head-item w-50">
+						<div class="input-group flex-nowrap">
+							<span class="input-group-text" id="addon-wrapping"><i
+								class="fa-solid fa-magnifying-glass"></i></span> <input type="text"
+								class="form-control" placeholder="Tìm kiếm"
+								aria-label="search-item" aria-describedby="addon-wrapping">
+						</div>
+					</div>
+					<div
+						class="dashboard-head-item d-flex align-items-center justify-content-end">
+						<div class="dashboard-head__noti">
+							<i class="fa-solid fa-bell"></i>
+						</div>
+					<div class="dashboard-head__user-info text-end">
+							<span class="d-block fw-bold fs-6" th:text="${user.fullName}"></span> <span
+								class="d-block"th:text="${session.username}"></span>
+						</div>
+						<img src="https://cdn-icons-png.flaticon.com/512/1177/1177568.png"
+							alt="">
+						<div class="dropdown dashboard-head__setting">
+							<a class="text-black dropdown-toggle" href="#"
+								role="button" data-bs-toggle="dropdown" aria-expanded="false">
+								<i class="fa-solid fa-gear"></i></a>
+
+							<ul class="dropdown-menu">
+								<li><a class="text-black dropdown-item" th:href="@{/logout}">Đăng xuất</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+				<div class="product-dashboard">
+					<div class="container overflow-hidden">
+						<div class="row gy-5 product-menu">
+							<div class="col-6">
+								<div class="p-3">
+									<button class="view-product-list-btn shadow"><a th:href="@{/admin/product/list}">Danh sách
+										sản phẩm</a></button>
+								</div>
+							</div>
+			
+							<div class="col-6">
+								<div class="p-3">
+									<button class="view-product-detail-btn shadow"><a th:href="@{/admin/product/add}">Thêm
+										sản phẩm mới</a></button>
+								</div>
+							</div>
+							<div class="col-8">
+								<div class="best-selling-product-table border rounded shadow">
+									<h4>Sản phẩm bán chạy</h4>
+									<table class="table text-center align-middle"
+										id="bestSellingTable">
+										<thead class="align-middle">
+											<tr>
+												<th scope="col">ID</th>
+												<th scope="col">Sản phẩm</th>
+												<th scope="col">Đã bán</th>
+												<th scope="col">Còn lại</th>
+											</tr>
+										</thead>
+										<tbody class="align-middle">
+											<tr class="best-selling-product-row"
+												id="best-selling-product-row-1">
+												<th scope="row">#P1</th>
+												<td class="d-flex align-items-center"><img
+													src="https://cdn.vuahanghieu.com/unsafe/0x500/left/top/smart/filters:quality(90)/https://admin.vuahanghieu.com/upload/product/2022/12/giay-the-thao-mlb-chunky-liner-mid-basic-new-york-yankees-3asxlmb3n-50bks-mau-trang-63ad362ab73c9-29122022133938.jpg"
+													alt=""> <span class="text-start">MLB Chunky
+														Liner Mid Basic New York Yankees</span></td>
+												<td>50</td>
+												<td>10</td>
+											</tr>
+											<tr class="best-selling-product-row"
+												id="best-selling-product-row-2">
+												<th scope="row">#P1</th>
+												<td class="d-flex align-items-center"><img
+													src="https://cdn.vuahanghieu.com/unsafe/0x500/left/top/smart/filters:quality(90)/https://admin.vuahanghieu.com/upload/product/2022/12/giay-the-thao-mlb-chunky-liner-mid-basic-new-york-yankees-3asxlmb3n-50bks-mau-trang-63ad362ab73c9-29122022133938.jpg"
+													alt=""> <span class="text-start">MLB Chunky
+														Liner Mid Basic New York Yankees</span></td>
+												<td>50</td>
+												<td>10</td>
+											</tr>
+											<tr class="best-selling-product-row"
+												id="best-selling-product-row-3">
+												<th scope="row">#P1</th>
+												<td class="d-flex align-items-center"><img
+													src="https://cdn.vuahanghieu.com/unsafe/0x500/left/top/smart/filters:quality(90)/https://admin.vuahanghieu.com/upload/product/2022/12/giay-the-thao-mlb-chunky-liner-mid-basic-new-york-yankees-3asxlmb3n-50bks-mau-trang-63ad362ab73c9-29122022133938.jpg"
+													alt=""> <span class="text-start">MLB Chunky
+														Liner Mid Basic New York Yankees</span></td>
+												<td>50</td>
+												<td>10</td>
+											</tr>
+											<tr class="best-selling-product-row"
+												id="best-selling-product-row-4">
+												<th scope="row">#P1</th>
+												<td class="d-flex align-items-center"><img
+													src="https://cdn.vuahanghieu.com/unsafe/0x500/left/top/smart/filters:quality(90)/https://admin.vuahanghieu.com/upload/product/2022/12/giay-the-thao-mlb-chunky-liner-mid-basic-new-york-yankees-3asxlmb3n-50bks-mau-trang-63ad362ab73c9-29122022133938.jpg"
+													alt=""> <span class="text-start">MLB Chunky
+														Liner Mid Basic New York Yankees</span></td>
+												<td>50</td>
+												<td>10</td>
+											</tr>
+											<tr class="best-selling-product-row"
+												id="best-selling-product-row-5">
+												<th scope="row">#P1</th>
+												<td class="d-flex align-items-center"><img
+													src="https://cdn.vuahanghieu.com/unsafe/0x500/left/top/smart/filters:quality(90)/https://admin.vuahanghieu.com/upload/product/2022/12/giay-the-thao-mlb-chunky-liner-mid-basic-new-york-yankees-3asxlmb3n-50bks-mau-trang-63ad362ab73c9-29122022133938.jpg"
+													alt=""> <span class="text-start">MLB Chunky
+														Liner Mid Basic New York Yankees</span></td>
+												<td>50</td>
+												<td>10</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div class="col-4">
+								<div class="product-number border rounded shadow">
+
+									<div class="row product-filter">
+										<div class="col-7">
+											<h5>Số lượng sản phẩm</h5>
+										</div>
+										<div class="col-5">
+											<select name="" id="" class="form-select">
+												<option value="">Hôm nay</option>
+												<option value="">Tuần</option>
+												<option value="">Tháng</option>
+												<option value="">Năm</option>
+											</select>
+										</div>
+									</div>
+									<div class="product-number-container">
+										<table class="table">
+											<tr>
+												<td>Sản phẩm mới</td>
+												<td class="fw-bold">5</td>
+											</tr>
+											<tr>
+												<td>Sản phẩm cũ</td>
+												<td class="fw-bold">5</td>
+											</tr>
+											<tr>
+												<td>Sản phẩm bán hết</td>
+												<td class="fw-bold">5</td>
+											</tr>
+											<tfoot>
+												<tr class="bg-black bg-opacity-50 text-white">
+													<td class="fw-bold">Tổng cộng</td>
+													<td class="fw-bold">20</td>
+												</tr>
+											</tfoot>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</form>
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+		crossorigin="anonymous"></script>
+</body>
+</html>

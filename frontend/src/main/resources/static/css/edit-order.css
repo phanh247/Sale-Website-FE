@@ -1,0 +1,68 @@
+@charset "UTF-8";
+
+h5 {
+    margin-bottom: 0 !important;
+}
+
+.order-details__info-card .info-card__head {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.order-details__info-card .info-card__head button {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 2px 6px;
+    font-size: 12px;
+}
+
+
+
+
+/* ----------------------------- order status --------------------- */
+
+.order-status label {
+    margin-top: 20px;
+}
+
+.order-status button {
+    margin-top: 20px;
+    width: 100%;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.order-status button:hover {
+    background-color: white;
+    border: 1px solid black;
+    color: black;
+    box-shadow: 0 6px 19px 0 rgba(0,0,0,0.19);
+}
+
+
+.order-summary-table {
+    padding: 20px;
+}
+
+#orderTable thead th {
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+#orderTable img {
+    width: 70px;
+    border: 1px solid #ddd;
+}
+
+#orderTable .other-info span {
+    font-size: 14px;
+    margin-right: 20px;
+    color: #aaa;
+}
+

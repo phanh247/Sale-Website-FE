@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Dashboard</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/dashboard.css}">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+<script src="https://kit.fontawesome.com/c39bd3b109.js"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+</head>
+<body>
+	<form th:href="@{/dashboard}" method="get">
+		<div class="body-container">
+			<div class="dashboard__side-menu">
+				<h3>DPTS Store</h3>
+				<ul class="side-menu-container">
+					<li class=""><a th:href="@{/admin/dashboard}"><i
+							class="fa-solid fa-house"></i> Dashboard</a></li>
+					<li><a th:href="@{/admin/product}"><i
+							class="fa-brands fa-shopify"></i> Sản phẩm</a></li>
+					<li><a th:href="@{/admin/order}"><i
+							class="fa-solid fa-clipboard"></i> Đơn hàng</a></li>
+					<li><a th:href="@{/admin/user}"><i
+							class="fa-solid fa-user"></i> Thành viên</a></li>
+					<li><a th:href="@{/}"><i class="fa-solid fa-house"></i> Trang chủ</a></li>
+				</ul>
+
+			</div>
+			<div class="dashboard__content">
+				<div
+					class="dashboard-head d-flex align-items-center justify-content-between">
+					<div class="dashboard-head-item w-50">
+						<div class="input-group flex-nowrap">
+							<span class="input-group-text" id="addon-wrapping"><i
+								class="fa-solid fa-magnifying-glass"></i></span> <input type="text"
+								class="form-control" placeholder="Tìm kiếm"
+								aria-label="search-item" aria-describedby="addon-wrapping">
+						</div>
+					</div>
+					<div
+						class="dashboard-head-item d-flex align-items-center justify-content-end">
+						<div class="dashboard-head__noti">
+							<i class="fa-solid fa-bell"></i>
+						</div>
+						<div class="dashboard-head__user-info text-end">
+							<span class="d-block fw-bold fs-6" th:text="${user.fullName}"></span> <span
+								class="d-block"th:text="${session.username}"></span>
+						</div>
+						<img src="https://cdn-icons-png.flaticon.com/512/1177/1177568.png"
+							alt="">
+						<div class="dropdown dashboard-head__setting">
+							<a class="text-black dropdown-toggle" href="#"
+								role="button" data-bs-toggle="dropdown" aria-expanded="false">
+								<i class="fa-solid fa-gear"></i></a>
+
+							<ul class="dropdown-menu">
+								<li><a class="text-black dropdown-item" th:href="@{/logout}">Đăng xuất</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="dashboard-body">
+					<div
+						class="dashboard-report row justify-content-between text-center">
+						<div class="dashboard-report-item col-md-3"
+							style="background-color: #d1e7dd;">
+							<div class="report-icon" style="background-color: #198754;">
+								<i class="fa-solid fa-dollar-sign"></i>
+							</div>
+							<div class="report-number"></div>
+						</div>
+						<div class="dashboard-report-item col-md-3"
+							style="background-color: #f8d7da;">
+							<div class="report-icon" style="background-color: #dc3545;">
+								<i class="fa-solid fa-cart-shopping"></i>
+							</div>
+							<div class="report-number"></div>
+						</div>
+						<div class="dashboard-report-item col-md-3"
+							style="background-color: #fff3cd">
+							<div class="report-icon" style="background-color: #ffc107;">
+								<i class="fa-solid fa-thumbs-up"></i>
+							</div>
+							<div class="report-number"></div>
+						</div>
+					</div>
+
+					<div class="dashboard-filter">
+						<div
+							class="dashboard-filter-date d-flex justify-content-between align-items-center p-3">
+							<ul class="nav nav-pills w-sm-100 d-inline-flex" id="pills-tab"
+								role="tablist">
+								<li class="nav-item" role="presentation">
+									<button class="nav-link text-black active" id="pills-home-tab"
+										data-bs-toggle="pill" data-bs-target="#pills-home"
+										type="button" role="tab" aria-controls="pills-home"
+										aria-selected="true">Today</button>
+								</li>
+								<li class="nav-item" role="presentation">
+									<button class="nav-link text-black" id="pills-profile-tab"
+										data-bs-toggle="pill" data-bs-target="#pills-profile"
+										type="button" role="tab" aria-controls="pills-profile"
+										aria-selected="false">Week</button>
+								</li>
+								<li class="nav-item" role="presentation">
+									<button class="nav-link text-black" id="pills-contact-tab"
+										data-bs-toggle="pill" data-bs-target="#pills-contact"
+										type="button" role="tab" aria-controls="pills-contact"
+										aria-selected="false">Month</button>
+								</li>
+								<li class="nav-item" role="presentation">
+									<button class="nav-link text-black" id="pills-disabled-tab"
+										data-bs-toggle="pill" data-bs-target="#pills-disabled"
+										type="button" role="tab" aria-controls="pills-disabled"
+										aria-selected="false">Year</button>
+								</li>
+							</ul>
+						</div>
+
+						<div class="dashboard-filter__detail-report tab-content container"
+							id="pills-tabContent">
+							<div class="today-filter tab-pane fade show active"
+								id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab"
+								tabindex="0">
+								<div class="container text-center">
+									<div class="row g-3">
+										<div class="col-md-4">
+											<div
+												class="today-customer-report p-3 border rounded bg-light d-flex justify-content-between align-items-center shadow">
+												<div class="today-customer-number">
+													<span class="d-block">Customers</span> <span
+														class="d-block fs-4 fw-bold">100</span>
+												</div>
+												<img
+													src="https://cdn-icons-png.flaticon.com/512/4149/4149883.png"
+													alt="" class="">
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div
+												class="today-customer-report p-3 border rounded bg-light d-flex justify-content-between align-items-center shadow">
+												<div class="today-customer-number">
+													<span class="d-block">Customers</span> <span
+														class="d-block fs-4 fw-bold">100</span>
+												</div>
+												<img
+													src="https://cdn-icons-png.flaticon.com/512/4149/4149883.png"
+													alt="" class="">
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div
+												class="today-customer-report p-3 border rounded bg-light d-flex justify-content-between align-items-center shadow">
+												<div class="today-customer-number">
+													<span class="d-block">Customers</span> <span
+														class="d-block fs-4 fw-bold">100</span>
+												</div>
+												<img
+													src="https://cdn-icons-png.flaticon.com/512/4149/4149883.png"
+													alt="" class="">
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div
+												class="today-customer-report p-3 border rounded bg-light d-flex justify-content-between align-items-center shadow">
+												<div class="today-customer-number">
+													<span class="d-block">Customers</span> <span
+														class="d-block fs-4 fw-bold">100</span>
+												</div>
+												<img
+													src="https://cdn-icons-png.flaticon.com/512/4149/4149883.png"
+													alt="" class="">
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div
+												class="today-customer-report p-3 border rounded bg-light d-flex justify-content-between align-items-center shadow">
+												<div class="today-customer-number">
+													<span class="d-block">Customers</span> <span
+														class="d-block fs-4 fw-bold">100</span>
+												</div>
+												<img
+													src="https://cdn-icons-png.flaticon.com/512/4149/4149883.png"
+													alt="" class="">
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div
+												class="today-customer-report p-3 border rounded bg-light d-flex justify-content-between align-items-center shadow">
+												<div class="today-customer-number">
+													<span class="d-block">Customers</span> <span
+														class="d-block fs-4 fw-bold">100</span>
+												</div>
+												<img
+													src="https://cdn-icons-png.flaticon.com/512/4149/4149883.png"
+													alt="" class="">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="tab-pane fade" id="pills-profile" role="tabpanel"
+								aria-labelledby="pills-profile-tab" tabindex="0">
+								<div class="container text-center">
+									<div class="row g-3">
+										<div class="col-md-4">
+											<div
+												class="today-customer-report p-3 border rounded bg-light d-flex justify-content-between align-items-center shadow">
+												<div class="today-customer-number">
+													<span class="d-block">Customers</span> <span
+														class="d-block fs-4 fw-bold">100</span>
+												</div>
+												<img
+													src="https://cdn-icons-png.flaticon.com/512/4149/4149883.png"
+													alt="" class="">
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div
+												class="today-customer-report p-3 border rounded bg-light d-flex justify-content-between align-items-center shadow">
+												<div class="today-customer-number">
+													<span class="d-block">Customers</span> <span
+														class="d-block fs-4 fw-bold">100</span>
+												</div>
+												<img
+													src="https://cdn-icons-png.flaticon.com/512/4149/4149883.png"
+													alt="" class="">
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div
+												class="today-customer-report p-3 border rounded bg-light d-flex justify-content-between align-items-center shadow">
+												<div class="today-customer-number">
+													<span class="d-block">Customers</span> <span
+														class="d-block fs-4 fw-bold">100</span>
+												</div>
+												<img
+													src="https://cdn-icons-png.flaticon.com/512/4149/4149883.png"
+													alt="" class="">
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div
+												class="today-customer-report p-3 border rounded bg-light d-flex justify-content-between align-items-center shadow">
+												<div class="today-customer-number">
+													<span class="d-block">Customers</span> <span
+														class="d-block fs-4 fw-bold">100</span>
+												</div>
+												<img
+													src="https://cdn-icons-png.flaticon.com/512/4149/4149883.png"
+													alt="" class="">
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div
+												class="today-customer-report p-3 border rounded bg-light d-flex justify-content-between align-items-center shadow">
+												<div class="today-customer-number">
+													<span class="d-block">Customers</span> <span
+														class="d-block fs-4 fw-bold">100</span>
+												</div>
+												<img
+													src="https://cdn-icons-png.flaticon.com/512/4149/4149883.png"
+													alt="" class="">
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div
+												class="today-customer-report p-3 border rounded bg-light d-flex justify-content-between align-items-center shadow">
+												<div class="today-customer-number">
+													<span class="d-block">Customers</span> <span
+														class="d-block fs-4 fw-bold">100</span>
+												</div>
+												<img
+													src="https://cdn-icons-png.flaticon.com/512/4149/4149883.png"
+													alt="" class="">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="tab-pane fade" id="pills-contact" role="tabpanel"
+								aria-labelledby="pills-contact-tab" tabindex="0">
+								<div class="container text-center">
+									<div class="row g-3">
+										<div class="col-md-4">
+											<div
+												class="today-customer-report p-3 border rounded bg-light d-flex justify-content-between align-items-center shadow">
+												<div class="today-customer-number">
+													<span class="d-block">Customers</span> <span
+														class="d-block fs-4 fw-bold">100</span>
+												</div>
+												<img
+													src="https://cdn-icons-png.flaticon.com/512/4149/4149883.png"
+													alt="" class="">
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div
+												class="today-customer-report p-3 border rounded bg-light d-flex justify-content-between align-items-center shadow">
+												<div class="today-customer-number">
+													<span class="d-block">Customers</span> <span
+														class="d-block fs-4 fw-bold">100</span>
+												</div>
+												<img
+													src="https://cdn-icons-png.flaticon.com/512/4149/4149883.png"
+													alt="" class="">
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div
+												class="today-customer-report p-3 border rounded bg-light d-flex justify-content-between align-items-center shadow">
+												<div class="today-customer-number">
+													<span class="d-block">Customers</span> <span
+														class="d-block fs-4 fw-bold">100</span>
+												</div>
+												<img
+													src="https://cdn-icons-png.flaticon.com/512/4149/4149883.png"
+													alt="" class="">
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div
+												class="today-customer-report p-3 border rounded bg-light d-flex justify-content-between align-items-center shadow">
+												<div class="today-customer-number">
+													<span class="d-block">Customers</span> <span
+														class="d-block fs-4 fw-bold">100</span>
+												</div>
+												<img
+													src="https://cdn-icons-png.flaticon.com/512/4149/4149883.png"
+													alt="" class="">
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div
+												class="today-customer-report p-3 border rounded bg-light d-flex justify-content-between align-items-center shadow">
+												<div class="today-customer-number">
+													<span class="d-block">Customers</span> <span
+														class="d-block fs-4 fw-bold">100</span>
+												</div>
+												<img
+													src="https://cdn-icons-png.flaticon.com/512/4149/4149883.png"
+													alt="" class="">
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div
+												class="today-customer-report p-3 border rounded bg-light d-flex justify-content-between align-items-center shadow">
+												<div class="today-customer-number">
+													<span class="d-block">Customers</span> <span
+														class="d-block fs-4 fw-bold">100</span>
+												</div>
+												<img
+													src="https://cdn-icons-png.flaticon.com/512/4149/4149883.png"
+													alt="" class="">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="tab-pane fade" id="pills-disabled" role="tabpanel"
+								aria-labelledby="pills-disabled-tab" tabindex="0">
+								<div class="container text-center">
+									<div class="row g-3">
+										<div class="col-md-4">
+											<div
+												class="today-customer-report p-3 border rounded bg-light d-flex justify-content-between align-items-center shadow">
+												<div class="today-customer-number">
+													<span class="d-block">Customers</span> <span
+														class="d-block fs-4 fw-bold">100</span>
+												</div>
+												<img
+													src="https://cdn-icons-png.flaticon.com/512/4149/4149883.png"
+													alt="" class="">
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div
+												class="today-customer-report p-3 border rounded bg-light d-flex justify-content-between align-items-center shadow">
+												<div class="today-customer-number">
+													<span class="d-block">Customers</span> <span
+														class="d-block fs-4 fw-bold">100</span>
+												</div>
+												<img
+													src="https://cdn-icons-png.flaticon.com/512/4149/4149883.png"
+													alt="" class="">
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div
+												class="today-customer-report p-3 border rounded bg-light d-flex justify-content-between align-items-center shadow">
+												<div class="today-customer-number">
+													<span class="d-block">Customers</span> <span
+														class="d-block fs-4 fw-bold">100</span>
+												</div>
+												<img
+													src="https://cdn-icons-png.flaticon.com/512/4149/4149883.png"
+													alt="" class="">
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div
+												class="today-customer-report p-3 border rounded bg-light d-flex justify-content-between align-items-center shadow">
+												<div class="today-customer-number">
+													<span class="d-block">Customers</span> <span
+														class="d-block fs-4 fw-bold">100</span>
+												</div>
+												<img
+													src="https://cdn-icons-png.flaticon.com/512/4149/4149883.png"
+													alt="" class="">
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div
+												class="today-customer-report p-3 border rounded bg-light d-flex justify-content-between align-items-center shadow">
+												<div class="today-customer-number">
+													<span class="d-block">Customers</span> <span
+														class="d-block fs-4 fw-bold">100</span>
+												</div>
+												<img
+													src="https://cdn-icons-png.flaticon.com/512/4149/4149883.png"
+													alt="" class="">
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div
+												class="today-customer-report p-3 border rounded bg-light d-flex justify-content-between align-items-center shadow">
+												<div class="today-customer-number">
+													<span class="d-block">Customers</span> <span
+														class="d-block fs-4 fw-bold">100</span>
+												</div>
+												<img
+													src="https://cdn-icons-png.flaticon.com/512/4149/4149883.png"
+													alt="" class="">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+		crossorigin="anonymous"></script>
+	<script type="text/javascript" th:src="@{/js/navbar.js}"></script>
+</body>
+</html>

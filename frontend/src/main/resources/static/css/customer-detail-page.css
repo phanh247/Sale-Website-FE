@@ -1,0 +1,34 @@
+
+
+.container-left{
+    display: block;
+    width: 30%;
+    padding: 6% 1% 0;
+    border-right: 0.5px solid black;
+}
+
+.account-profile {
+    margin: 0 6% 0%;
+}
+
+.account-info .account-info-item{
+    padding: 5% 10% 5%;
+    width: 100%;
+}
+.container-right h3{
+    text-align: center;
+    padding: 2% 2% 2%;
+}
+
+.container-right {
+    padding: 0% 0% 5%;
+}
+
+
+.update-info .row>label{
+    width: 18%;
+}
+
+.account-info-item:hover a{
+    color: goldenrod !important;
+}

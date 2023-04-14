@@ -1,0 +1,93 @@
+@charset "UTF-8";
+
+
+#productTable .product-id {
+    font-weight: bold;
+}
+
+#productTable .product-info {
+    text-align: left;
+}
+
+#productTable .product-info img {
+    width: 50px;
+    margin-right: 10px;
+    border: 1px solid #ddd;
+}
+
+#productTable .product-info a {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    max-width: 300px;
+    color: black !important;
+}
+
+#productTable .product-status .sell {
+    padding: 3px 8px;
+    background-color: green;
+    border-radius: 5px;
+    border: none;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+}
+
+#productTable .product-status .sold-out {
+    padding: 3px 8px;
+    background-color: tomato;
+    border-radius: 5px;
+    border: none;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+}
+
+#productTable .product-btns button a {
+	color: black !important;
+	display: block;
+	width: 100%;
+}
+
+#productTable .product-btns button {
+    width: 50px;
+    height: 30px;
+    background-color: transparent;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    display: block;
+}
+
+#productTable .product-btns button i {
+	color: black !important;
+	display: block;
+	text-align: center;
+}
+
+#productTable .product-btns button:hover {
+    border: 1px solid black;
+}
+
+.pagination li a {
+	color: black !important;
+}
+
+.active {
+	color: white !important;
+	background-color: black !important;
+}
+
+/* .table-pagination {
+    display: flex;
+    justify-content: space-between;
+}
+
+.table-pagination .pagination a {
+	color: black !important;
+}
+
+.active {
+    background-color: black !important;
+    color: white !important;
+} */

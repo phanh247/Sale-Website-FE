@@ -1,0 +1,43 @@
+@charset "UTF-8";
+
+
+
+#orderTable .order-id a, #orderTable .order-user-id {
+    font-weight: bold;
+    color: black !important;
+}
+
+#orderTable .order-btns button {
+    width: 50px;
+    height: 30px;
+    background-color: transparent;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    display: block;
+}
+
+#orderTable .order-btns button a {
+	color: black !important;
+	display: block;
+	width: 100%;
+}
+
+#orderTable .order-btns button i {
+	color: black !important;
+	display: block;
+	text-align: center;
+}
+
+#orderTable .order-btns button:hover {
+    border: 1px solid black;
+}
+
+.pagination li a {
+	color: black !important;
+}
+
+.active {
+	color: white !important;
+	background-color: black !important;
+}
+

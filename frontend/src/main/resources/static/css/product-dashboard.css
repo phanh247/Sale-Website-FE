@@ -1,0 +1,42 @@
+@charset "UTF-8";
+
+
+.product-menu button {
+    width: 100%;
+    padding: 10px;
+    background-color: black;
+    color: white;
+    border-radius: 5px;
+    border: none;
+}
+
+.product-menu button a {
+	display: block;
+	width: 100%;
+}
+
+.best-selling-product-table {
+    padding: 20px;
+}
+
+#bestSellingTable thead th {
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+#bestSellingTable img {
+    width: 70px;
+    border: 1px solid #ddd;
+}
+
+.product-number {
+    padding: 20px;
+}
+
+.product-number .product-number-container {
+    padding: 20px 0;
+}
+
+.product-number .product-number-container table {
+    width: 100%;
+}

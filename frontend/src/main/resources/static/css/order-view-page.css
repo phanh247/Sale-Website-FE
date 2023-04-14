@@ -1,0 +1,45 @@
+
+
+
+.order-view{
+    margin: 0 6% 0%;
+    padding: 3% 0;
+}
+
+.id-order{
+    text-align: center;
+}
+
+.created-date{
+
+}
+
+table td,
+table th{
+    border-bottom: 0.5px solid black;
+    padding: 1%;
+}
+
+table{
+    width: 100%;
+}
+
+.order-detail-content tbody tr td:nth-child(1),
+.bill tbody tr td:nth-child(1){
+    width: 90%;
+}
+
+table th,
+.order-detail-content tbody tr td:nth-child(2),
+.bill tbody tr td:nth-child(2){
+    text-align: center;
+}
+
+h5{
+    padding-top: 5%;
+}
+
+table a:hover{
+    color: goldenrod !important;
+}
+

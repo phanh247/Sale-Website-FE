@@ -1,0 +1,134 @@
+@charset "UTF-8";
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+.register-form-container {
+    background-image: url("https://sneakernews.com/wp-content/uploads/2021/08/Nike-Dunk-Low-GS-Pink-Velvet-DO6485-600-7.jpg?w=1140");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100%;
+    padding-bottom: 5% !important;
+}
+
+.register-form-container h2 {
+    text-align: center;
+    padding: 1.5%;
+}
+
+.register-form {
+    background-color: rgba(255, 255, 255, 0.7);
+    margin: 0% 25%;
+    padding: 0.5% 1% 1%;
+    position: absolute;
+    width: 50%;
+}
+
+.register-form>.d-flex {
+    margin: 5% 0;
+
+}
+
+.input-item {
+    width: 50%;
+    margin: 0.5% 3%;
+    color: black !important;
+}
+
+input {
+    padding: 1%;
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.eye-icon {
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.eye-icon .hide-eye {
+    display: none;
+}
+
+
+.register-btns {
+    margin-top: 10%;
+}
+
+.register-btns button {
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+.sign-up-btn {
+    width: 100%;
+    background-color: #B99B6B;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 30px;
+    font-size: 16px;
+    color: white !important;
+    text-transform: uppercase;
+}
+
+.sign-up-btn:hover {
+    background-color: #F1DBBF;
+    color: black !important;
+    box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+}
+
+.google-sign-up-btn,
+.facebook-sign-up-btn {
+    width: 100%;
+    border: 1px solid #B99B6B;
+    border-radius: 5px;
+    padding: 10px 30px;
+    background-color: white;
+}
+
+.google-sign-up-btn:hover,
+.facebook-sign-up-btn:hover {
+    background-color: #F1DBBF;
+    box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+}
+
+.sign-in {
+    text-align: center;
+}
+
+.sign-in a {
+    cursor: pointer;
+    color: black;
+}
+
+.sign-in a:hover {
+    color: goldenrod !important;
+}
+
+/* --mới thêm */
+.valid-message {
+    font-size: 15px !important;
+	color: red !important;
+}
+
+.error input{
+    border-bottom: 0.5px solid red !important;
+}
+
+.success input{
+    border-bottom: 0.5px solid green !important;
+}

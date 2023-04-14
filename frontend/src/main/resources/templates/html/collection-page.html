@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- css -->
+<!--     <link rel="stylesheet" href="/LAYOUT/CSS/collection-page.css"> -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{/css/collection-page.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/css/navbar.css}">
+
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+	integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<!-- js -->
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+	crossorigin="anonymous"></script>
+
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<title>Tất cả sản phẩm</title>
+</head>
+
+<body>
+
+	<div>
+		<div class="top-bar">
+			<div class="container-fluid">
+				<div class="d-flex justify-content-between">
+					<div>
+						<ul class="topbar-left p-2">
+							<li><span><i class="fa-solid fa-phone-volume"></i>Hotline:
+									19009191</span></li>
+						</ul>
+					</div>
+					<div>
+						<ul class="topbar-right d-flex justify-content-end">
+							<li class="p-2" th:unless="${session.username} == null"><a
+								th:href="@{/check-order}"><span>Tra cứu đơn hàng</span></a></li>
+							<li class="p-2" th:if="${session.username} == null"><a
+								th:href="@{/login}"><span>Tra cứu đơn hàng</span></a></li>
+							<li class="p-2 " th:if="${session.username} == null"><a
+								th:href="@{/login}"><i class="fa-solid fa-user"></i><span>Đăng
+										nhập</span></a></li>
+							<li class="p-2 admin-menu"
+								th:unless="${session.username} == null"><a><i
+									class="fa-solid fa-user"></i><span
+									th:text="${session.username}"></span></a></li>
+							<li class="p-2"><a th:href="@{/cart}"><i
+									class="fa-solid fa-cart-shopping"></i><span>Giỏ hàng</span></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top"
+			data-bs-theme="dark">
+			<div class="container-fluid">
+				<a class="navbar-brand" th:href="@{/}">Logo</a>
+				<button class="navbar-toggler" type="button"
+					data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+					aria-controls="navbarSupportedContent" aria-expanded="false"
+					aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li class="nav-item dropdown"><a class="nav-link" href="#"
+							data-bs-toggle="dropdown" aria-expanded="false">SẢN PHẨM MỚI</a>
+							<div class="dropdown-menu">
+								<a class="dropdown-item" href="#">Action</a> <a
+									class="dropdown-item" href="#">Action</a> <a
+									class="dropdown-item" href="#">Action</a>
+							</div></li>
+						<li class="nav-item dropdown"
+							th:each="category : ${listCategories}"><a class="nav-link"
+							th:href="@{/category/{id}(id=${category.categoryId})}"
+							data-bs-toggle="dropdown" aria-expanded="false"
+							th:text="${category.categoryName}"></a>
+							<div class="dropdown-menu">
+								<a class="dropdown-item"
+									th:href="@{/category/{id}?type=Nam(id=${category.categoryId})}">Nam</a>
+								<a class="dropdown-item"
+									th:href="@{/category/{id}?type=Nữ(id=${category.categoryId})}">Nữ</a>
+								<a class="dropdown-item"
+									th:href="@{/category/{id}?type=Unisex(id=${category.categoryId})}">Unisex</a>
+							</div></li>
+
+
+						<li class="nav-item dropdown"><a class="nav-link" href="#"
+							aria-expanded="false">TIN TỨC</a></li>
+					</ul>
+					<form th:action="@{/search}" method="get">
+						<div class="d-flex" role="search">
+							<input class="form-control me-2" type="search"
+								placeholder="Search" aria-label="Search" th:name="searchField">
+							<button class="btn btn-outline-success" type="submit">
+								<i class="fa-solid fa-magnifying-glass"></i>
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</nav>
+		<main>
+			<div class="search-result">
+				<div class="d-flex justify-content-between search-result-bar">
+					<nav style="-bs-breadcrumb-divider: '&gt;';"
+						aria-label="breadcrumb">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+							<li class="breadcrumb-item" ><a th:href="@{/category/{id}(id=${categoryId})}" th:text="${category}" ></a></li>
+						</ol>
+					</nav>
+					<div class="dropdown-center">
+						<div class="dropdown-toggle dropdown-title"
+							data-bs-toggle="dropdown" aria-expanded="false">Sắp Xếp
+							Theo</div>
+						<ul class="dropdown-menu">
+							<li><a class="dropdown-item"
+								th:href="@{/search/sort?sort=desc}">Giá giảm dần</a></li>
+							<li><a class="dropdown-item"
+								th:href="@{/search/sort?sort=asc}">Giá tăng dần</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="d-flex">
+					<form th:action="@{/search/filter}" method="post"
+						th:object="${productRq}">
+						<aside class="container-left">
+							<div class="search-facet-container">
+								<div class="widget-block d-flex flex-column">
+									<h6 class="widget-title">Thương hiệu</h6>
+									<label class="widget-item"> <input type="checkbox"
+										name="categoryName" id="flexCheckDefault" value="Adidas">
+										<span>Adidas</span>
+									</label> <label class="widget-item"> <input type="checkbox"
+										name="categoryName" value="Nike" id="flexCheckDefault">
+										<span>Nike</span>
+									</label> <label class="widget-item"> <input type="checkbox"
+										name="categoryName" value="Puma" id="flexCheckDefault">
+										<span>Puma</span>
+									</label> <label class="widget-item"> <input type="checkbox"
+										name="categoryName" value="vansVault" id="flexCheckDefault">
+										<span>Vans Vault</span>
+									</label> <label class="widget-item"> <input type="checkbox"
+										name="categoryName" value="newBanlance" id="flexCheckDefault">
+										<span>New Banlance</span>
+									</label> <label class="widget-item"> <input type="checkbox"
+										name="categoryName" value="jordan" id="flexCheckDefault">
+										<span>Jordan</span>
+									</label> <label class="widget-item"> <input type="checkbox"
+										name="categoryName" value="Reebok" id="flexCheckDefault">
+										<span>Reebok</span>
+									</label> <label class="widget-item"> <input type="checkbox"
+										name="categoryName" value="fila" id="flexCheckDefault">
+										<span>Fila</span>
+									</label>
+								</div>
+								<div class="widget-block d-flex flex-column">
+									<h6 class="widget-title">Giới tính</h6>
+									<label class="widget-item"> <input type="checkbox"
+										name="type" value="Nam" id="flexCheckDefault"> <span>Nam</span>
+									</label> <label class="widget-item"> <input type="checkbox"
+										name="type" value="Nữ" id="flexCheckDefault"> <span>Nữ</span>
+									</label> <label class="widget-item"> <input type="checkbox"
+										name="type" value="Unisex" id="flexCheckDefault"> <span>Unisex</span>
+									</label>
+								</div>
+								<div class="widget-block d-flex flex-column">
+									<h6 class="widget-title">Kích thước</h6>
+									<label class="widget-item"> <input type="checkbox"
+										value="36" id="flexCheckDefault"> <span>36</span>
+									</label> <label class="widget-item"> <input type="checkbox"
+										value="37" id="flexCheckDefault"> <span>37</span>
+									</label> <label class="widget-item"> <input type="checkbox"
+										value="38" id="flexCheckDefault"> <span>38</span>
+									</label> <label class="widget-item"> <input type="checkbox"
+										value="39" id="flexCheckDefault"> <span>39</span>
+									</label> <label class="widget-item"> <input type="checkbox"
+										value="40" id="flexCheckDefault"> <span>40</span>
+									</label> <label class="widget-item"> <input type="checkbox"
+										value="41" id="flexCheckDefault"> <span>41</span>
+									</label> <label class="widget-item"> <input type="checkbox"
+										value="42" id="flexCheckDefault"> <span>42</span>
+									</label> <label class="widget-item"> <input type="checkbox"
+										value="43" id="flexCheckDefault"> <span>43</span>
+									</label>
+								</div>
+								<div class="widget-block d-flex flex-column">
+									<h6 class="widget-title">Màu sắc</h6>
+									<label class="widget-item"> <input type="checkbox"
+										name="color" value="trắng" id="flexCheckDefault"> <span>Trắng</span>
+									</label> <label class="widget-item"> <input type="checkbox"
+										name="color" value="đen" id="flexCheckDefault"> <span>Đen</span>
+									</label> <label class="widget-item"> <input type="checkbox"
+										name="color" value="xám" id="flexCheckDefault"> <span>Xám</span>
+									</label> <label class="widget-item"> <input type="checkbox"
+										name="size" value="orange" id="flexCheckDefault"> <span>Màu
+											khác</span>
+									</label>
+								</div>
+
+								<div class="widget-block d-flex flex-column">
+									<h6 class="widget-title">Khoảng giá</h6>
+									<label class="widget-item"> <input type="checkbox"
+										name="startRangePrice" value="12" id="flexCheckDefault">
+										<span>1000 - 2000</span>
+									</label> <label class="widget-item"> <input type="checkbox"
+										name="startRangePrice" value="23" id="flexCheckDefault">
+										<span>2000 - 3000</span>
+									</label> <label class="widget-item"> <input type="checkbox"
+										name="startRangePrice" value="34" id="flexCheckDefault">
+										<span>3000 - 4000</span>
+									</label> <label class="widget-item"> <input type="checkbox"
+										name="startRangePrice" value="45" id="flexCheckDefault">
+										<span>4000 - 5000</span>
+									</label> <label class="widget-item"> <input type="checkbox"
+										name="startRangePrice" value="56" id="flexCheckDefault">
+										<span>5000 - 6000</span>
+									</label> <label class="widget-item"> <input type="checkbox"
+										name="startRangePrice" value="610" id="flexCheckDefault">
+										<span>6000 +</span>
+									</label>
+								</div>
+								<button type="submit"
+									class="reset-facet btn bg-dark text-white filter-btn">Chọn</button>
+								<button type="reset"
+									class="reset-facet btn btn-light text-black border reset-filter-btn">Xóa
+									lọc</button>
+							</div>
+						</aside>
+					</form>
+					<div class="container-right">
+						<div class="d-flex align-items-start content-product-container">
+							<span th:text="${msg}"></span>
+							<div class="content-products-item"
+								th:each="product : ${listProducts}">
+								<a th:href="@{/product/{id}(id=${product.productId})}"> <img
+									th:src="${product.images[0].link}">
+									<div class="name-brand" th:text="${product.brand}"></div>
+									<h6 class="name-prod" style="height: 30px;"
+										th:text="${product.productName}"></h6>
+								</a>
+								<div class="price-prod"
+									th:text="${#numbers.formatDecimal(product.price,3,'POINT',0,'COMMA')}+đ"></div>
+								<div
+									class="buy-or-cart d-flex justify-content-between align-item-center">
+									<a href="#">Mua ngay</a> <a href="#">Thêm giỏ hàng</a>
+								</div>
+							</div>
+
+
+
+
+
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+		<footer>
+			<div class="footer-content">
+				<div class="d-flex justify-content-between">
+					<div class="p-2">
+						<h5>Về chúng tôi</h5>
+						<ul class="navbar-nav">
+							<li class="nav-item"><a href="#">Giới thiệu</a></li>
+							<li class="nav-item"><a href="#">Hệ thống của hàng</a></li>
+						</ul>
+					</div>
+					<div class="p-2">
+						<h5>Hỗ trợ khách hàng</h5>
+						<ul class="navbar-nav">
+							<li class="nav-item"><a href="#">Chính sánh khách hàng</a></li>
+							<li class="nav-item"><a href="#">Chính sách đổi trả</a></li>
+							<li class="nav-item"><a href="#">Chính sách bảo hành</a></li>
+							<li class="nav-item"><a href="#">Chính sách giao hàng</a></li>
+							<li class="nav-item"><a href="#">Chính sách bảo mật</a></li>
+							<li class="nav-item"><a href="#">Câu hỏi thường gặp</a></li>
+						</ul>
+					</div>
+					<div class="p-2">
+						<h5>Tuyển dụng</h5>
+						<ul class="navbar-nav">
+							<li class="nav-item"><a href="#">Tuyển dụng</a></li>
+						</ul>
+					</div>
+					<div class="p-2">
+						<h5>Địa chỉ - Liên hệ</h5>
+						<ul class="navbar-nav">
+							<li class="nav-item"><a href="#">Địa chỉ</a></li>
+						</ul>
+					</div>
+					<div class="p-2">
+						<h5>Kết nối với chúng tôi</h5>
+						<ul class="navbar-nav">
+							<li class="nav-item"><a href="#"><i
+									class="fa-brands fa-tiktok"></i>Tiktok</a></li>
+							<li class="nav-item"><a href="#"><i
+									class="fa-brands fa-twitter"></i>Twitter</a></li>
+							<li class="nav-item"><a href="#"><i
+									class="fa-brands fa-youtube"></i>Youtube</a></li>
+							<li class="nav-item"><a href="#"><i
+									class="fa-brands fa-facebook"></i>Facebook</a></li>
+							<li class="nav-item"><a href="#"><i
+									class="fa-brands fa-instagram"></i>Instagram</a></li>
+
+							<li class="nav-item"><a href="#">Hotline: 19009191</a></li>
+							<li class="nav-item"><a href="#">Email: cskhABC@gmai.com</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="d-flex justify-content-between">
+					<div class="p-2 d-flex align-items-center">
+						<span>Copyright © 2023 ABC</span>
+					</div>
+					<div class="p-2 d-flex align-items-center">
+						<span> Thanh toán: <i class="fa-solid fa-money-bill"></i> <i
+							class="fa-brands fa-cc-visa"></i> <i
+							class="fa-brands fa-cc-mastercard"></i>
+						</span>
+					</div>
+				</div>
+			</div>
+		</footer>
+	</div>
+
+	<script type="text/javascript" th:src="@{/js/convert-price.js}"></script>
+	<script type="text/javascript" th:src="@{/js/navbar.js}"></script>
+</body>
+
+</html>

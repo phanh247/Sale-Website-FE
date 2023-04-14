@@ -1,0 +1,43 @@
+@charset "UTF-8";
+
+
+.order-menu button {
+    width: 100%;
+    padding: 10px;
+    background-color: black;
+    color: white;
+    border-radius: 5px;
+    border: none;
+}
+
+.order-menu button a {
+	color: white !important;
+	display: block;
+	width: 100%;
+}
+
+.recent-order-table {
+    padding: 20px;
+}
+
+#recentOrderTable thead th {
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+#recentOrderTable img {
+    width: 70px;
+    border: 1px solid #ddd;
+}
+
+.order-number {
+    padding: 20px;
+}
+
+.order-number .order-number-container {
+    padding: 20px 0;
+}
+
+.order-number .order-number-container table {
+    width: 100%;
+}
